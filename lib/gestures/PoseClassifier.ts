@@ -33,7 +33,12 @@ export function classifyPose(lm: Vec3[]): PoseReading {
 
   const pinchGap = dist(lm[LM.THUMB_TIP]!, lm[LM.INDEX_TIP]!) / handSize
   const pinchStrength = Math.max(0, Math.min(1, 1 - (pinchGap - 0.25) / 0.9))
-  const isPinch = pinchGap < 0.45 && (middle || ring) // fingers still up ⇒ deliberate pinch, not a fist
+  // Pinch vs fist: people naturally curl their other fingers while pinching,
+  // so don't require them extended. The reliable discriminator is the index
+  // finger itself — in a pinch it arcs forward to meet the thumb (tip stays
+  // at/beyond the PIP joint's reach); in a fist it collapses into the palm.
+  const indexReach = dist(lm[LM.INDEX_TIP]!, wrist) / (dist(lm[LM.INDEX_PIP]!, wrist) || 1e-4)
+  const isPinch = pinchGap < 0.42 && indexReach > 0.92
 
   let pose: HandPose = 'none'
   if (isPinch) pose = 'pinch'

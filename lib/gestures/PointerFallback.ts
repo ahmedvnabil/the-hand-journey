@@ -60,14 +60,18 @@ export class PointerFallback {
     const { x, y } = this.position
     const longPress = this.pressed && performance.now() - this.pressedAt > 550
     // Finger spread factor: open hand by default, pinch on press, fist on long-press.
-    const spread = longPress ? 0.012 : this.pressed ? 0.03 : 0.075
+    const spread = longPress ? 0.03 : this.pressed ? 0.03 : 0.075
+    // Joint reach profile per knuckle (mcp, pip, dip, tip). A fist folds the
+    // tip BACK inside the pip's radius — that's what the classifier reads as
+    // "curled"; simply shrinking an extended hand still reads as open.
+    const profile = longPress ? [1, 1.6, 1.4, 0.9] : [1, 2, 3, 4]
 
     const landmarks: Vec3[] = []
     for (let i = 0; i < 21; i++) {
       const finger = Math.floor((i - 1) / 4) // -0..4
       const joint = (i - 1) % 4
       const angle = this.roll + (finger - 2) * 0.38
-      const reach = i === 0 ? 0 : (joint + 1) * spread * (0.4 + this.depth)
+      const reach = i === 0 ? 0 : profile[joint]! * spread * (0.4 + this.depth)
       landmarks.push({
         x: x + Math.cos(angle - Math.PI / 2) * reach,
         y: y + Math.sin(angle - Math.PI / 2) * reach - (i === 0 ? -0.02 : 0),

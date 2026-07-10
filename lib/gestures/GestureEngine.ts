@@ -8,6 +8,9 @@ import type { GestureEngineEvents, HandPose, HandState, HandsFrame } from './typ
 
 const HOLD_MS = 800
 const GRAB_WINDOW_MS = 600
+// Smoothed landmarks pass through a brief 'none' between fist and open —
+// grab/release are windows around the transition, not strict edges.
+const RELEASE_WINDOW_MS = 450
 
 interface PerHand {
   smoother: LandmarkSmoother
@@ -19,6 +22,7 @@ interface PerHand {
   lastSeen: number
   lastState: HandState | null
   exitChecked: boolean
+  fistAt: number
 }
 
 /**
@@ -135,6 +139,7 @@ export class GestureEngine extends Emitter<GestureEngineEvents> {
         lastSeen: t,
         lastState: null,
         exitChecked: false,
+        fistAt: -Infinity,
       }
       this.perHand.set(key, state)
     }
@@ -167,6 +172,7 @@ export class GestureEngine extends Emitter<GestureEngineEvents> {
 
     if (predicted) return hand // don't fire discrete gestures off extrapolated data
     state.lastState = hand
+    if (reading.pose === 'fist') state.fistAt = t
 
     // Pose transitions → discrete events.
     if (reading.pose !== state.pose) {
@@ -175,12 +181,15 @@ export class GestureEngine extends Emitter<GestureEngineEvents> {
 
       if (reading.pose === 'pinch') this.emit('gesture', { type: 'pinch-start', hand })
       if (previous === 'pinch') this.emit('gesture', { type: 'pinch-end', hand })
-      if (reading.pose === 'open-palm') state.openPalmAt = t
-      if (reading.pose === 'fist' && t - state.openPalmAt < GRAB_WINDOW_MS) {
-        this.emit('gesture', { type: 'grab', hand })
+      if (reading.pose === 'open-palm') {
+        state.openPalmAt = t
+        // Release = the hand was a fist a moment ago and is now open.
+        if (t - state.fistAt < RELEASE_WINDOW_MS) this.emit('gesture', { type: 'release', hand })
       }
-      if (previous === 'fist' && reading.pose === 'open-palm') {
-        this.emit('gesture', { type: 'release', hand })
+      // Grab = closing the hand: open→fist quickly, or pinch→fist (how the
+      // pointer fallback's long-press sequences, and a valid hand close too).
+      if (reading.pose === 'fist' && (t - state.openPalmAt < GRAB_WINDOW_MS || previous === 'pinch')) {
+        this.emit('gesture', { type: 'grab', hand })
       }
 
       state.pose = reading.pose
