@@ -12,7 +12,7 @@ export interface QualityProfile {
 }
 
 const PROFILES: Record<QualityTier, Omit<QualityProfile, 'tier'>> = {
-  performance: { pixelRatioCap: 1, particleScale: 0.45, bloom: true, motionBlur: false, shadows: false },
+  performance: { pixelRatioCap: 1, particleScale: 0.3, bloom: true, motionBlur: false, shadows: false },
   balanced: { pixelRatioCap: 1.5, particleScale: 1, bloom: true, motionBlur: true, shadows: false },
   ultra: { pixelRatioCap: 2, particleScale: 1.7, bloom: true, motionBlur: true, shadows: true },
 }

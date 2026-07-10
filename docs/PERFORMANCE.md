@@ -7,13 +7,21 @@ Target: 60 fps everywhere, honest degradation when the device can't.
 | | performance | balanced | ultra |
 |---|---|---|---|
 | pixel-ratio cap | 1.0 | 1.5 | 2.0 |
-| particle scale | 0.45× | 1× | 1.7× |
+| particle scale | 0.3× | 1× | 1.7× |
 | bloom | ✓ | ✓ | ✓ |
 | motion blur | ✗ | ✓ | ✓ |
 
+**Touch devices (iPad/phones) start on `performance` automatically** — plus
+MSAA off, one tracked hand, 480×360 camera, and hand detection capped at
+~15 Hz (the smoother's extrapolation hides the gaps). Detection lives in
+`lib/core/device.ts` (coarse pointer + multitouch).
+
 The watchdog samples fps every frame; below 45 fps for 3 s it steps the tier
-down automatically (unless the user pinned a tier in the menu). Reduced-motion
-users get motion blur off and near-instant transitions regardless of tier.
+down automatically (unless the user pinned a tier in the menu). Because
+particle counts are baked at scene build time, a tier change **rebuilds the
+active world** through the normal veil transition so the new budget takes
+effect immediately. Reduced-motion users get motion blur off and
+near-instant transitions regardless of tier.
 
 ## Budgets that keep the promise
 

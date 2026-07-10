@@ -14,14 +14,14 @@ export interface RendererBundle {
  */
 export async function createRenderer(
   canvas: HTMLCanvasElement,
-  opts: { forceWebGL?: boolean } = {},
+  opts: { forceWebGL?: boolean; antialias?: boolean } = {},
 ): Promise<RendererBundle> {
   const wantWebGPU = !opts.forceWebGL && typeof navigator !== 'undefined' && 'gpu' in navigator
 
   const make = async (forceWebGL: boolean) => {
     const renderer = new THREE.WebGPURenderer({
       canvas,
-      antialias: true,
+      antialias: opts.antialias ?? true,
       alpha: false,
       forceWebGL,
     })

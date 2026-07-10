@@ -53,10 +53,10 @@ export class GestureEngine extends Emitter<GestureEngineEvents> {
     return this.tracker?.videoElement ?? null
   }
 
-  async start(target: HTMLElement, maxHands = 2): Promise<void> {
+  async start(target: HTMLElement, maxHands = 2, lowPower = false): Promise<void> {
     if (this.source === 'camera') {
       this.tracker = new HandTracker()
-      await this.tracker.start(maxHands)
+      await this.tracker.start(maxHands, lowPower)
     } else {
       this.pointer = new PointerFallback()
       this.pointer.start(target)

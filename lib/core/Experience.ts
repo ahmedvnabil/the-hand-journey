@@ -9,6 +9,7 @@ import { PostPipeline } from '../post/PostPipeline'
 import { StoryEngine } from '../story/StoryEngine'
 import type { ChapterDef } from '../story/chapters'
 import { Emitter } from '../utils/emitter'
+import { classifyDevice, type DeviceClass } from './device'
 import { Quality, type QualityTier } from './Quality'
 import { createRenderer, type Backend } from './RendererManager'
 import { SceneManager } from './SceneManager'
@@ -65,10 +66,16 @@ export class Experience extends Emitter<ExperienceEvents> {
   private canvas!: HTMLCanvasElement
   private resizeObserver: ResizeObserver | null = null
   private switching = false
+  /** The particle budget the active scene was built with. */
+  private builtParticleScale = 0
+
+  readonly device: DeviceClass = classifyDevice()
 
   constructor(private options: ExperienceOptions) {
     super()
-    this.quality = new Quality(options.quality ?? 'balanced')
+    // Tablets/phones start on the light tier — one small GPU is shared
+    // between rendering, bloom and the hand landmarker.
+    this.quality = new Quality(options.quality ?? (this.device === 'mobile' ? 'performance' : 'balanced'))
     if (options.reducedMotion) this.quality.reducedMotion = true
     this.animation.reducedMotion = this.quality.reducedMotion
     this.ticker = new Ticker((dt, elapsed, now) => this.tick(dt, elapsed, now))
@@ -76,14 +83,15 @@ export class Experience extends Emitter<ExperienceEvents> {
 
   async start(canvas: HTMLCanvasElement, container: HTMLElement): Promise<void> {
     this.canvas = canvas
-    const { renderer, backend } = await createRenderer(canvas)
+    const mobile = this.device === 'mobile'
+    const { renderer, backend } = await createRenderer(canvas, { antialias: !mobile })
     this.renderer = renderer
     this.backend = backend
     this.applyPixelRatio()
     this.renderer.setSize(container.clientWidth, container.clientHeight, false)
 
     this.gestures = new GestureEngine(this.options.input)
-    await this.gestures.start(container, 2)
+    await this.gestures.start(container, mobile ? 1 : 2, mobile)
 
     this.ctx = {
       renderer: this.renderer,
@@ -135,9 +143,14 @@ export class Experience extends Emitter<ExperienceEvents> {
     this.story.on('hint', (hint) => this.emit('hint', hint))
     this.gestures.on('gesture', (event) => this.routeGesture(event))
     this.gestures.on('status', ({ tracking }) => this.emit('tracking', tracking))
-    this.quality.on('change', () => {
+    this.quality.on('change', (profile) => {
       this.applyPixelRatio()
       this.rebuildPost()
+      // Particle counts are baked at scene build time — a tier change only
+      // takes real effect after the world is rebuilt with the new budget.
+      if (profile.particleScale !== this.builtParticleScale && this.scenes.active) {
+        void this.switchTo(this.story.current)
+      }
     })
     this.quality.on('fps', (fps) => this.emit('fps', fps))
 
@@ -159,6 +172,7 @@ export class Experience extends Emitter<ExperienceEvents> {
       }
       this.physics.clear()
       const scene = await this.scenes.load(chapter.id)
+      this.builtParticleScale = this.quality.profile.particleScale
       this.interaction.adopt(scene.scene, scene.camera, chapter.accent)
       this.audio.attachListener(scene.camera)
       if (this.audioStarted) this.audio.setMood(chapter.chord)

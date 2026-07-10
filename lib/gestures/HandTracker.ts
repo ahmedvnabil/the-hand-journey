@@ -22,19 +22,29 @@ export class HandTracker {
   private stream: MediaStream | null = null
   private landmarker: import('@mediapipe/tasks-vision').HandLandmarker | null = null
   private lastVideoTime = -1
+  private lastDetectAt = 0
   private disposed = false
+
+  /**
+   * Minimum ms between detections. Tablets share one small GPU between
+   * rendering and the landmarker — capping detection at ~15Hz frees real
+   * frame budget, and the smoother's extrapolation hides the gaps.
+   */
+  minDetectIntervalMs = 0
 
   get videoElement(): HTMLVideoElement | null {
     return this.video
   }
 
-  async start(maxHands: number): Promise<void> {
+  async start(maxHands: number, lowPower = false): Promise<void> {
     const { FilesetResolver, HandLandmarker } = await import('@mediapipe/tasks-vision')
+    if (lowPower) this.minDetectIntervalMs = 66
 
+    const res = lowPower ? { width: { ideal: 480 }, height: { ideal: 360 } } : { width: { ideal: 640 }, height: { ideal: 480 } }
     const [vision, stream] = await Promise.all([
       FilesetResolver.forVisionTasks(WASM_CDN),
       navigator.mediaDevices.getUserMedia({
-        video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } },
+        video: { facingMode: 'user', ...res },
         audio: false,
       }),
     ])
@@ -72,6 +82,8 @@ export class HandTracker {
   detect(timestampMs: number): RawHand[] | null {
     if (!this.landmarker || !this.video || this.video.readyState < 2) return null
     if (this.video.currentTime === this.lastVideoTime) return null
+    if (timestampMs - this.lastDetectAt < this.minDetectIntervalMs) return null
+    this.lastDetectAt = timestampMs
     this.lastVideoTime = this.video.currentTime
 
     const result = this.landmarker.detectForVideo(this.video, timestampMs)
