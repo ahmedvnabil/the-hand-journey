@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { QualityTier } from '@engine/core/Quality'
 
-const { quality, muted, setQuality, toggleMute, toggleFullscreen, photo, restart } = useExperience()
+const { quality, muted, narrator, setQuality, toggleMute, toggleNarrator, toggleFullscreen, photo, restart } = useExperience()
 
 // The dock stays invisible until summoned — the dream shouldn't have a settings panel floating in it.
 const open = ref(false)
@@ -45,6 +45,9 @@ const tiers: Array<{ id: QualityTier; label: string }> = [
         </div>
         <button class="text-sm text-bone-dim transition-colors hover:text-bone" @click="toggleMute()">
           الصوت · {{ muted ? 'صامت' : 'يعمل' }}
+        </button>
+        <button class="text-sm text-bone-dim transition-colors hover:text-bone" @click="toggleNarrator()">
+          الحكواتي · {{ narrator ? 'يحكي' : 'صامت' }}
         </button>
         <button class="text-sm text-bone-dim transition-colors hover:text-bone" @click="toggleFullscreen()">
           ملء الشاشة · F

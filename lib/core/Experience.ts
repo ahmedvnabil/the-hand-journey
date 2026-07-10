@@ -23,6 +23,7 @@ export interface ExperienceEvents extends Record<string, unknown> {
   gesture: GestureEvent
   frame: HandsFrame
   tracking: boolean
+  reward: { stat: string; stars: number }
   fps: number
   veil: { opaque: boolean }
   error: { message: string }
@@ -121,7 +122,16 @@ export class Experience extends Emitter<ExperienceEvents> {
     // the first switchTo below simply opens the requested world.
     if (this.options.startChapter) this.story.goTo(this.options.startChapter)
     this.story.on('chapter-change', ({ chapter }) => void this.switchTo(chapter))
-    this.story.on('chapter-complete', ({ chapter }) => this.emit('chapter-complete', chapter))
+    this.story.on('chapter-complete', ({ chapter }) => {
+      this.audio.celebrate(true)
+      this.interaction.celebrate(true)
+      this.emit('chapter-complete', chapter)
+    })
+    this.story.on('deed', ({ stat }) => {
+      this.audio.celebrate(false)
+      this.interaction.celebrate(false)
+      this.emit('reward', { stat, stars: this.story.stars })
+    })
     this.story.on('hint', (hint) => this.emit('hint', hint))
     this.gestures.on('gesture', (event) => this.routeGesture(event))
     this.gestures.on('status', ({ tracking }) => this.emit('tracking', tracking))

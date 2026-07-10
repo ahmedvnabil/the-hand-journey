@@ -6,11 +6,13 @@ import { PointerFallback } from './PointerFallback'
 import { classifyPose, palmCentroid } from './PoseClassifier'
 import type { GestureEngineEvents, HandPose, HandState, HandsFrame } from './types'
 
-const HOLD_MS = 800
-const GRAB_WINDOW_MS = 600
+// Tuned for small, imprecise hands — kids should never feel the interface
+// fighting them. HOLD_MS is exported so the cursor can draw its progress ring.
+export const HOLD_MS = 550
+const GRAB_WINDOW_MS = 900
 // Smoothed landmarks pass through a brief 'none' between fist and open —
 // grab/release are windows around the transition, not strict edges.
-const RELEASE_WINDOW_MS = 450
+const RELEASE_WINDOW_MS = 600
 
 interface PerHand {
   smoother: LandmarkSmoother

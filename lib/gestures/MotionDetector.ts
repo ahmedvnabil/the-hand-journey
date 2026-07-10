@@ -7,8 +7,8 @@ interface Sample {
 }
 
 const WINDOW_MS = 320
-const SWIPE_SPEED = 0.9 // normalized screen units / second
-const SWIPE_TRAVEL = 0.13
+const SWIPE_SPEED = 0.75 // normalized screen units / second — gentle enough for kids
+const SWIPE_TRAVEL = 0.11
 const SWIPE_COOLDOWN_MS = 450
 // Re-acquisition after tracking loss teleports the palm; a real swipe at
 // webcam rate (~30Hz) moves ≤~0.17/frame, and dropped frames double that.
@@ -19,8 +19,8 @@ const TELEPORT_GAP_DISTANCE = 0.2
 const TELEPORT_GAP_MS = 80
 // A hand flung upward usually exits the camera frame before the full swipe
 // thresholds are met — judge the motion we saw right before losing it.
-const EXIT_SPEED = 0.55
-const EXIT_TRAVEL = 0.09
+const EXIT_SPEED = 0.45
+const EXIT_TRAVEL = 0.08
 const EXIT_FRESH_MS = 200
 const WAVE_WINDOW_MS = 1200
 const WAVE_REVERSALS = 3

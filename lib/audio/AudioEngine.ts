@@ -124,6 +124,17 @@ export class AudioEngine {
     src.stop(t + duration)
   }
 
+  /** Rising major arpeggio + sparkle — every small victory deserves one. */
+  celebrate(big = false): void {
+    this.ensure()
+    const base = 392 + Math.random() * 80
+    const steps = big ? [1, 1.25, 1.5, 2, 2.5, 3] : [1, 1.25, 1.5]
+    steps.forEach((ratio, i) => {
+      setTimeout(() => this.chime(base * ratio, 1.2, big ? 0.3 : 0.2), i * 85)
+    })
+    this.whoosh(big ? 1.3 : 0.6, 900, 4500, big ? 0.22 : 0.12)
+  }
+
   /** Low rumble — thunder, tomb doors, black holes. */
   rumble(duration = 2, gain = 0.5): void {
     const ctx = this.ensure()

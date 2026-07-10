@@ -3,7 +3,7 @@ import { CHAPTERS } from '@engine/story/chapters'
 
 const {
   stage, chapter, chapterComplete, hintText, veilOpaque, fps, backend,
-  tracking, inputSource, errorMessage,
+  tracking, inputSource, errorMessage, stars,
   start, handleKey, destroy,
 } = useExperience()
 
@@ -47,6 +47,7 @@ onBeforeUnmount(() => {
     <template v-if="stage === 'live'">
       <ChapterTitle :chapter="chapter" />
       <CaptionBar :text="hintText" :complete="chapterComplete" />
+      <RewardStars :count="stars" />
       <HandHud :tracking="tracking" :source="inputSource" :fps="fps" :backend="backend" />
       <ModeDock />
     </template>

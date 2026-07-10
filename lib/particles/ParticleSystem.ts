@@ -16,6 +16,8 @@ export interface ParticleOptions {
   additive?: boolean
   opacity?: number
   seed?: number
+  /** Start with every particle hidden far below the scene — for emitters. */
+  parked?: boolean
 }
 
 /**
@@ -57,7 +59,7 @@ export class ParticleSystem {
     const palette = (Array.isArray(opts.color) ? opts.color : [opts.color]).map((c) => new THREE.Color(c))
     for (let i = 0; i < this.count; i++) {
       const x = (rand() * 2 - 1) * spread.x
-      const y = (rand() * 2 - 1) * spread.y
+      const y = opts.parked ? -10000 : (rand() * 2 - 1) * spread.y
       const z = (rand() * 2 - 1) * spread.z
       this.positions.set([x, y, z], i * 3)
       this.homes.set([x, y, z], i * 3)
@@ -88,6 +90,30 @@ export class ParticleSystem {
   /** Pull particles toward a point this frame (negative strength repels). */
   attract(point: THREE.Vector3, strength: number, radius = 6): void {
     this.attractors.push({ point, strength, radius })
+  }
+
+  private emitHead = 0
+
+  /**
+   * Respawn the next `count` pooled particles at an origin with random
+   * outward velocities — sparkle trails, fireworks, celebration bursts.
+   */
+  emit(origin: THREE.Vector3, count: number, power = 2, jitter = 0.12): void {
+    for (let n = 0; n < count; n++) {
+      this.emitHead = (this.emitHead + 1) % this.count
+      const i = this.emitHead * 3
+      this.positions[i] = origin.x + (Math.random() - 0.5) * jitter
+      this.positions[i + 1] = origin.y + (Math.random() - 0.5) * jitter
+      this.positions[i + 2] = origin.z + (Math.random() - 0.5) * jitter
+      const dx = Math.random() - 0.5
+      const dy = Math.random() - 0.5
+      const dz = Math.random() - 0.5
+      const len = Math.hypot(dx, dy, dz) || 1
+      const speed = power * (0.4 + Math.random() * 0.6)
+      this.velocities[i] = (dx / len) * speed
+      this.velocities[i + 1] = (dy / len) * speed
+      this.velocities[i + 2] = (dz / len) * speed
+    }
   }
 
   /** Kick a shell of particles outward from an origin. */

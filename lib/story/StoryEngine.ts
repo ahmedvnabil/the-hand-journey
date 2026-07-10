@@ -31,6 +31,8 @@ export interface StoryEvents extends Record<string, unknown> {
   'chapter-complete': { chapter: ChapterDef }
   hint: { text: string; durationMs?: number }
   stats: JourneyStats
+  /** A real accomplishment (not raw gesture counting) — triggers celebration. */
+  deed: { stat: keyof JourneyStats; value: number }
 }
 
 const STORAGE_KEY = 'the-hand-journey/v1'
@@ -83,6 +85,15 @@ export class StoryEngine extends Emitter<StoryEvents> {
     this.stats = { ...this.stats, [stat]: this.stats[stat] + amount }
     this.persist()
     this.emit('stats', this.stats)
+    if (stat !== 'gesturesTotal') this.emit('deed', { stat, value: this.stats[stat] })
+  }
+
+  /** Total deeds — the star counter kids collect. */
+  get stars(): number {
+    return Object.entries(this.stats).reduce(
+      (sum, [stat, value]) => (stat === 'gesturesTotal' ? sum : sum + value),
+      0,
+    )
   }
 
   /** A scene achieved its narrative goal. */
