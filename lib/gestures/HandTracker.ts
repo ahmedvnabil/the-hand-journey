@@ -5,7 +5,10 @@ export interface RawHand {
   landmarks: Vec3[]
 }
 
-const WASM_CDN = 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/wasm'
+// MUST match the exact version pinned in package.json — the JS API and the
+// wasm binaries ship as a matched pair, and jsDelivr 404s unpublished tags.
+const MEDIAPIPE_VERSION = '0.10.35'
+const WASM_CDN = `https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@${MEDIAPIPE_VERSION}/wasm`
 const MODEL_URL =
   'https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task'
 
@@ -41,21 +44,28 @@ export class HandTracker {
     }
     this.stream = stream
 
-    this.landmarker = await HandLandmarker.createFromOptions(vision, {
-      baseOptions: { modelAssetPath: MODEL_URL, delegate: 'GPU' },
-      runningMode: 'VIDEO',
-      numHands: maxHands,
-      minHandDetectionConfidence: 0.5,
-      minHandPresenceConfidence: 0.5,
-      minTrackingConfidence: 0.5,
-    })
+    try {
+      this.landmarker = await HandLandmarker.createFromOptions(vision, {
+        baseOptions: { modelAssetPath: MODEL_URL, delegate: 'GPU' },
+        runningMode: 'VIDEO',
+        numHands: maxHands,
+        minHandDetectionConfidence: 0.5,
+        minHandPresenceConfidence: 0.5,
+        minTrackingConfidence: 0.5,
+      })
 
-    const video = document.createElement('video')
-    video.playsInline = true
-    video.muted = true
-    video.srcObject = stream
-    await video.play()
-    this.video = video
+      const video = document.createElement('video')
+      video.playsInline = true
+      video.muted = true
+      video.srcObject = stream
+      await video.play()
+      this.video = video
+    } catch (error) {
+      // Don't leave the camera LED on after a failed init — that reads as
+      // "tracking is running" when nothing is.
+      this.stop()
+      throw error
+    }
   }
 
   /** Returns raw hands for this frame, or null when the video has no new frame. */

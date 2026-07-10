@@ -53,7 +53,8 @@ bump `CACHE` in `sw.js` (`thj-v1` → `thj-v2`) to invalidate old shells.
 
 Two CDN fetches at runtime (then cached by the service worker):
 
-- MediaPipe WASM: `cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/wasm`
+- MediaPipe WASM: `cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.35/wasm`
+  (version must stay in lockstep with package.json — see `MEDIAPIPE_VERSION` in `lib/gestures/HandTracker.ts`)
 - Hand model: `storage.googleapis.com/mediapipe-models/.../hand_landmarker.task`
 
 For a fully self-hosted deployment, download both into `/public` and change
