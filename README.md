@@ -1,76 +1,133 @@
-# The Hand Journey
+<div align="center">
 
-An interactive dream controlled entirely by your hands.
+# ✋ رحلة اليد السحرية
+### The Hand Journey — an interactive dream controlled entirely by your hands
 
-Ten worlds. No buttons. The webcam sees your hands, MediaPipe reads them,
-and a WebGPU dreamscape answers — particles gather, portals open, whales
-breach, cities rearrange. The mouse is only a fallback.
+**عشرة عوالم. بلا أزرار. يدك هي العصا السحرية.**
 
-## Quick start
+[![Live](https://img.shields.io/badge/✨_جرّبها_الآن-journey.zad.tools-e8c37a?style=for-the-badge)](https://journey.zad.tools)
+[![Mirror](https://img.shields.io/badge/mirror-GitHub_Pages-24292f?style=for-the-badge&logo=github)](https://ahmedvnabil.github.io/the-hand-journey/)
+
+![Nuxt 4](https://img.shields.io/badge/Nuxt_4-00DC82?logo=nuxt&logoColor=white)
+![Three.js](https://img.shields.io/badge/Three.js-WebGPU-000000?logo=threedotjs&logoColor=white)
+![MediaPipe](https://img.shields.io/badge/MediaPipe-Hand_Tracking-0097A7)
+![Bun](https://img.shields.io/badge/Bun-000000?logo=bun&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![Arabic](https://img.shields.io/badge/العربية-RTL-8fd18a)
+
+<br />
+
+<img src="docs/media/arrival.gif" alt="بوابة النور تتكوّن من الغبار حول يد الزائر" width="880" />
+
+*ارفع كفّك المفتوح… الغبار يتجمّع، وبوّابة من نور تفتح الرحلة.*
+
+</div>
+
+---
+
+## 🌍 التجربة | The Experience
+
+الكاميرا ترى يدك — و**MediaPipe** يقرأ ٢١ مفصلًا منها ٣٠ مرة في الثانية، على جهازك بالكامل.
+كل قرصة تزرع زهرة، كل تلويحة تُطيّر عصافير، وكل قبضة تثني الجاذبية.
+لا شيء يُسجَّل، ولا شيء يغادر المتصفح.
+
+Your webcam sees your hand, MediaPipe reads 21 landmarks of it on-device,
+and a WebGPU dreamscape answers — pinches grow flowers, waves release birds,
+a closed fist bends gravity. **No buttons anywhere.** Mouse/touch is only a fallback.
+
+<div align="center">
+<table>
+<tr>
+<td align="center" width="50%">
+<img src="docs/media/forest.gif" alt="الغابة المسحورة — الممر المخفي يضيء" width="100%" /><br />
+<sub>🌲 <b>الغابة المسحورة</b> — اقرص الهواء وستُولد زهرة من نور</sub>
+</td>
+<td align="center" width="50%">
+<img src="docs/media/finale.gif" alt="الكون الأخير — ذكريات كل العوالم تدور" width="100%" /><br />
+<sub>🌌 <b>الكون الأخير</b> — كل العوالم التي لمستَها تدور حولك</sub>
+</td>
+</tr>
+<tr>
+<td align="center" width="50%">
+<img src="docs/media/home.png" alt="الصفحة الرئيسية — فهرس العوالم العشرة بالعربية" width="100%" /><br />
+<sub>📖 <b>فهرس العوالم</b> — تقدّمك ونجومك محفوظان دائمًا</sub>
+</td>
+<td align="center" width="50%">
+<img src="docs/media/portal.png" alt="بوابة النور مكتملة" width="100%" /><br />
+<sub>🚪 <b>البوّابة</b> — أول عتبة في الحلم</sub>
+</td>
+</tr>
+</table>
+</div>
+
+## 🗺️ العوالم العشرة | Ten Worlds
+
+| | العالم | ماذا تتعلم يدك؟ |
+|---|--------|------------------|
+| ١ | **البوّابة** | ارفع كفّك — الغبار يصير بابًا من نور |
+| ٢ | **الغابة المسحورة** | اقرص لتزرع زهورًا، لوّح لتطير العصافير |
+| ٣ | **المحيط** | حرّك الموج، نادِ الحيتان، استدعِ مغامرة المطر والبرق |
+| ٤ | **مصر القديمة** | أشِر للأبواب المختومة، أمسك الجعران الذهبي ودوّره |
+| ٥ | **الفضاء** | أمسك الكواكب، اقذفها، أغلق قبضتك فتُولد دوّامة النجوم |
+| ٦ | **بيت الذكريات** | اقرص الذكريات الطائرة قبل أن تذوب |
+| ٧ | **مختبر المستقبل** | حرّك الهولوجرام وامسح البيانات بيديك الاثنتين |
+| ٨ | **العبور** | فصلٌ هادئ مهيب — افتح الأبواب، ودفّئ قلوب الغرباء |
+| ٩ | **مدينة المستقبل** | ارفع الأبراج، حوّل النهار ليلًا بكفّك |
+| ١٠ | **الكون الأخير** | كل ما تعلمته… معًا، ووداعٌ مكتوب من رحلتك أنت |
+
+أكمل عالمًا ثم **اسحب يدك لأعلى** لتسافر. كل إنجاز = ⭐ والحكواتي يقرأ لك التلميحات بالعربي.
+
+## ✨ الإيماءات | Gestures
+
+كف مفتوح · قبضة · قرصة · إشارة · سحب (٤ اتجاهات) · تثبيت · مسك · إفلات · تلويح · دوران المعصم · فرد اليدين · قرب/بُعد من الكاميرا
+
+Smoothed with One-Euro filters, extrapolated through dropped frames, tuned
+with a real child's hands — pinch has hysteresis (easy in, hard to lose),
+and a fling that exits the camera frame still counts as a swipe.
+Full heuristics: [docs/GESTURES.md](docs/GESTURES.md)
+
+## 🚀 التشغيل | Quick Start
 
 ```bash
 bun install
-bun run dev        # http://localhost:3000 — allow the camera when asked
+bun run dev        # http://localhost:3000 — اسمح للكاميرا
 ```
 
-Routes: `/` is the home page — an index of all ten worlds with your
-progress; `/journey` is the experience itself (`/journey?world=space`
-deep-links straight into a world).
+- `/` — فهرس العوالم · `/journey?world=space` — دخول مباشر لأي عالم
+- بدون كاميرا: الفأرة/اللمس (ضغطة = قرصة، مطوّلة = قبضة، العجلة = عمق)
+- كيبورد: `←→` تنقّل · `N` تخطٍّ · `F` ملء الشاشة · `P` صورة
 
-Production:
+## 📦 النشر | Deployment
 
 ```bash
-bun run generate   # static build → .output/public
-bun run preview
+./deploy.sh            # build + rsync → https://journey.zad.tools (CloudPanel VPS)
+./deploy.sh --dry-run  # عرض التغييرات فقط
+./deploy.sh --rollback # استرجاع آخر نسخة
+git push               # → auto-deploys the GitHub Pages mirror via Actions
 ```
 
-> Camera access requires a **secure context**: `localhost` works, any other
-> host must be HTTPS.
+Static output, zero backend — any HTTPS host works. Details: [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)
 
-## The journey
+## 🏗️ تحت الغطاء | Under the Hood
 
-| # | World | You learn to… |
-|---|-------|----------------|
-| I | Arrival | raise a hand — dust becomes a door |
-| II | The Forest | pinch flowers into being, wave birds into the sky |
-| III | The Ocean | stir waves, summon whales, call and calm a storm |
-| IV | Ancient Egypt | point at sealed doors, grab and rotate what's inside |
-| V | Space | grab planets, throw them, collapse a fist into a black hole |
-| VI | Human Memory | catch drifting memories before they fade |
-| VII | Innovation Lab | move holograms, scrub data, scale sculptures two-handed |
-| VIII | The Crossing | open doors, gather papers, warm strangers — a quiet chapter |
-| IX | Future City | redirect traffic, raise towers, turn day to night |
-| X | The Final Universe | everything at once — and a goodbye written from your own journey |
+**Nuxt 4 · Bun · TypeScript · Three.js `WebGPURenderer`** (WebGPU with automatic
+WebGL2 fallback — one TSL node-material pipeline for both) · **bloom + motion-blur**
+post · **MediaPipe Tasks Vision** hand landmarker · **GSAP** scoped per scene ·
+procedural **Web Audio** soundtrack (zero audio files) · quality governor that
+auto-downgrades below 45fps · lazy per-world chunks · **PWA**.
 
-Finish a world, then **swipe up** to travel on.
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — engines, frame loop, scene lifecycle
+- [docs/SCENE_CONTRACT.md](docs/SCENE_CONTRACT.md) — how to write world № 11
+- [docs/PERFORMANCE.md](docs/PERFORMANCE.md) — the 60fps playbook
 
-## Gestures
+## 🔒 الخصوصية | Privacy
 
-Open palm · closed fist · pinch · point · swipe (4 directions) · hold ·
-grab · release · wave · rotate hand · two-hand spread · distance to camera.
-Full reference: [docs/GESTURES.md](docs/GESTURES.md).
+تتبع اليد يعمل **على جهازك بالكامل** — لا يغادر أي إطار فيديو المتصفح أبدًا.
+Hand tracking runs fully on-device; no video frame ever leaves the browser.
+The only persistence is a local `localStorage` save of your progress and stars.
 
-No camera? The pointer fallback maps move/click/long-press/wheel to
-palm/pinch/fist/depth. Keyboard: `←→` worlds, `N` skip, `F` fullscreen,
-`P` photo mode, `Q/E` rotate.
+---
 
-## Stack
-
-Nuxt 4 · Bun · TypeScript · Three.js (WebGPURenderer — WebGPU with automatic
-WebGL2 fallback, TSL node materials, bloom + motion-blur post) · MediaPipe
-Tasks Vision Hand Landmarker · GSAP · Tailwind CSS v4 · Web Audio API
-(fully procedural soundtrack) · PWA.
-
-## Privacy
-
-Hand tracking runs **entirely on-device**. No video frame ever leaves the
-browser; nothing is uploaded, recorded, or stored beyond a local progress
-save (`localStorage`).
-
-## Documentation
-
-- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — engines, data flow, scene lifecycle
-- [docs/GESTURES.md](docs/GESTURES.md) — detection heuristics and tuning
-- [docs/PERFORMANCE.md](docs/PERFORMANCE.md) — quality tiers, budgets, 60fps playbook
-- [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) — static hosting, headers, PWA
-- [docs/SCENE_CONTRACT.md](docs/SCENE_CONTRACT.md) — how to write a new world
+<div align="center">
+<sub>صُنعت بيدين — على أمل أن تُلعب بأيادٍ صغيرة ✋⭐</sub>
+</div>
