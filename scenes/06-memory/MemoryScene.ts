@@ -7,13 +7,13 @@ import { damp, seeded, wobble } from '@engine/utils/math'
 import type { GestureEvent } from '@engine/gestures/types'
 
 const CAPTIONS = [
-  'the sea, 1974', 'her laugh', 'the yellow kitchen', 'a train window',
-  'first snow', 'the garden gate', 'sunday morning', 'the old radio',
-  'a borrowed coat', 'the lemon tree', 'his hands, working', 'the last day of school',
-  'rain on a tin roof', 'a name in the sand', 'the blue bicycle', 'someone singing, far away',
+  'بحرُ الصيف', 'ضحكتُها', 'المطبخُ الأصفر', 'نافذةُ القطار',
+  'أوّلُ الثلج', 'بوابةُ الحديقة', 'صباحُ الأحد', 'المذياعُ القديم',
+  'معطفٌ مستعار', 'شجرةُ الليمون', 'يداهُ تعملان', 'آخرُ يومٍ في المدرسة',
+  'مطرٌ على سطحِ الصفيح', 'اسمٌ على الرمل', 'الدراجةُ الزرقاء', 'غناءٌ من بعيد',
 ]
 
-const STORY_LINES = ['you were small', 'the light was everywhere', 'nothing is ever lost']
+const STORY_LINES = ['كنتَ صغيرًا', 'كان النورُ في كلِّ مكان', 'لا شيءَ يضيعُ أبدًا']
 
 /** A polaroid nobody took: warm paper, a blurred almost-photograph, ink going quiet. */
 function makeMemoryTexture(caption: string, seedN: number): THREE.CanvasTexture {
@@ -69,7 +69,7 @@ function makeMemoryTexture(caption: string, seedN: number): THREE.CanvasTexture 
   g.lineWidth = 3
   g.strokeRect(px - 3, py - 3, pw + 6, ph + 6)
 
-  g.font = 'italic 21px Georgia, serif'
+  g.font = '21px "Aref Ruqaa", serif'
   g.fillStyle = 'rgba(92, 58, 38, 0.85)'
   g.textAlign = 'center'
   g.fillText(caption, w / 2, h - 40)
@@ -163,7 +163,7 @@ export default class MemoryScene extends BaseScene {
     // Three lines of the story, dark until the wall earns them.
     STORY_LINES.forEach((line, i) => {
       const material = new THREE.MeshBasicMaterial({
-        map: textTexture([line], { width: 1024, height: 200, font: 'italic 64px Georgia', color: '#f2dcc9' }),
+        map: textTexture([line], { width: 1024, height: 200, font: '64px "Aref Ruqaa", serif', color: '#f2dcc9' }),
         transparent: true,
         opacity: 0,
         depthWrite: false,
@@ -174,7 +174,7 @@ export default class MemoryScene extends BaseScene {
       this.storyLines.push({ mesh, material, lit: 0, revealed: false })
     })
 
-    this.hint('Pinch a memory before it drifts away.', 9000)
+    this.hint('اقرص الذكرى قبل أن تطير!', 9000)
   }
 
   override onGesture(event: GestureEvent): void {
@@ -215,9 +215,9 @@ export default class MemoryScene extends BaseScene {
       })
 
     const n = this.caughtCount
-    if (n === 1) this.hint('It flew home. There is a wall for these.', 6000)
+    if (n === 1) this.hint('طارت إلى بيتها! هناك جدارٌ ينتظرُ الذكريات.', 6000)
     if (n === 4 || n === 8 || n === 12) this.revealLine(n / 4 - 1)
-    if (n === 8) this.hint('The wall is filling. The story is coming back.', 6000)
+    if (n === 8) this.hint('الجدارُ يمتلئ… والحكايةُ تعودُ شيئًا فشيئًا.', 6000)
     if (n === 12) this.assemble()
   }
 
@@ -238,7 +238,7 @@ export default class MemoryScene extends BaseScene {
     this.ctx.audio.setIntensity(0.65)
     this.tween(this, { mosaicPulse: 1, duration: 2.5, ease: 'power2.inOut' })
     this.complete()
-    this.hint('Nothing is ever lost. Swipe up to continue.', 10000)
+    this.hint('لا شيءَ يضيعُ أبدًا. اسحب يدك لأعلى لتكمل الرحلة', 10000)
   }
 
   update(dt: number, elapsed: number): void {

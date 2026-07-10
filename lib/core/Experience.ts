@@ -104,6 +104,17 @@ export class Experience extends Emitter<ExperienceEvents> {
     this.post = new PostPipeline(this.renderer)
     this.scenes = new SceneManager(this.ctx)
 
+    // Scenes paint Arabic onto canvas textures at build time — give the
+    // calligraphy font a moment to arrive so 3D text isn't a fallback face.
+    try {
+      await Promise.race([
+        document.fonts.load('64px "Aref Ruqaa"'),
+        new Promise((resolve) => setTimeout(resolve, 1500)),
+      ])
+    } catch {
+      /* fallback font is fine */
+    }
+
     // Wire story → scene switching and event forwarding to the UI layer.
     this.story.restore()
     // Deep link: jump before listeners are wired, so no transition fires —
@@ -253,7 +264,7 @@ export class Experience extends Emitter<ExperienceEvents> {
 
   /** Keyboard accessibility: arrows navigate, space acts as pinch. */
   handleKey(key: string): void {
-    if (key === 'ArrowRight') this.story.isComplete(this.story.current.id) ? this.story.next() : this.story.hint('Finish this world first — or press N to skip ahead.')
+    if (key === 'ArrowRight') this.story.isComplete(this.story.current.id) ? this.story.next() : this.story.hint('أكمل هذا العالم أولًا — أو اضغط N للتخطي.')
     if (key === 'ArrowLeft') this.story.previous()
     if (key === 'n') this.story.next()
     if (key === 'f') void this.toggleFullscreen()

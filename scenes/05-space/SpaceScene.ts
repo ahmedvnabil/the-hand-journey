@@ -144,7 +144,7 @@ export default class SpaceScene extends BaseScene {
     this.ctx.physics.bounds = new THREE.Box3(new THREE.Vector3(-45, -28, -45), new THREE.Vector3(45, 28, 22))
     this.track(() => this.planets.forEach((p) => this.ctx.physics.remove(p.body)))
 
-    this.hint('Reach out and grab a world. It will forgive you.', 9000)
+    this.hint('مُدّ يدك وأمسك كوكبًا… لا تخف، إنه يحب اللعب!', 9000)
   }
 
   override onHands(frame: HandsFrame): void {
@@ -174,7 +174,7 @@ export default class SpaceScene extends BaseScene {
         this.held = nearest
         nearest.body.grabbed = true
         this.ctx.audio.chimeAt(nearest.mesh.position, 220, 0.9, 0.25)
-        this.hint('You are holding a world. Let it go — softly, or not.', 6000)
+        this.hint('أنت تحمل كوكبًا بين أصابعك! افتح يدك وأطلقه… برفق أو بقوة!', 6000)
       }
     }
 
@@ -188,7 +188,7 @@ export default class SpaceScene extends BaseScene {
         this.ctx.story.record('planetsThrown')
         this.ctx.audio.whoosh(0.9, 400, 2600, 0.35)
         this.threw = true
-        if (!this.collapsedOnce) this.hint('Now make a fist and hold it. Feed the dark.', 7000)
+        if (!this.collapsedOnce) this.hint('الآن أغلق قبضتك واثبت… لتصنع دوّامة النجوم!', 7000)
         this.checkComplete()
       }
     }
@@ -222,7 +222,7 @@ export default class SpaceScene extends BaseScene {
     this.tween(group.scale, { x: 1, y: 1, z: 1, duration: 0.8, ease: 'power3.out' })
     this.ctx.audio.rumble(6, 0.5)
     this.ctx.audio.chimeAt(group.position, 65, 4, 0.5)
-    this.hint('You made a hunger. Everything leans toward it.', 6000)
+    this.hint('صنعت دوّامة النجوم! انظر كيف يميل كل شيء نحوها!', 6000)
   }
 
   private collapseBlackHole(): void {
@@ -245,7 +245,7 @@ export default class SpaceScene extends BaseScene {
       x: 0.001, y: 0.001, z: 0.001, duration: 0.5, ease: 'power4.in',
       onComplete: () => disposeObject(hole.group),
     })
-    if (!this.threw) this.hint('Grab a planet and hurl it across the night.', 7000)
+    if (!this.threw) this.hint('أمسك كوكبًا وارمِه بعيدًا بين النجوم!', 7000)
     this.checkComplete()
   }
 
@@ -280,7 +280,7 @@ export default class SpaceScene extends BaseScene {
     this.add(ring)
     this.ctx.audio.whoosh(1.8, 150, 3400, 0.4)
     this.ctx.audio.chime(this.chapter.chord[2] ?? 174.6, 3, 0.25)
-    this.hint('A door between galaxies. Hold on.', 5000)
+    this.hint('باب سحري بين المجرّات! تمسّك جيدًا!', 5000)
 
     // The dash: fov blooms, stars streak, and a different galaxy is waiting.
     // (AnimationEngine shortens these tweens under reduced motion.)
@@ -304,7 +304,7 @@ export default class SpaceScene extends BaseScene {
   private shiftGalaxy(): void {
     this.hueShift = (this.hueShift + 0.13) % 1
     for (const n of this.nebulas) n.sprite.material.color.setHSL((n.hue + this.hueShift) % 1, 0.65, 0.62)
-    this.hint('A new galaxy. Same hands.', 5000)
+    this.hint('مجرّة جديدة بألوان جديدة… ويداك الساحرتان معك دائمًا!', 5000)
   }
 
   private checkComplete(): void {
@@ -312,7 +312,7 @@ export default class SpaceScene extends BaseScene {
     this.done = true
     this.ctx.audio.setIntensity(0.7)
     this.complete()
-    this.hint('You played with gravity and won. Swipe up to continue.', 10000)
+    this.hint('لعبت مع الجاذبية وفزت! اسحب يدك لأعلى لتكمل الرحلة', 10000)
   }
 
   update(dt: number, elapsed: number): void {

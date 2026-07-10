@@ -25,13 +25,14 @@ const hovered = ref<string | null>(null)
 /** The traveler's deeds, whispered at the foot of the page. */
 const deeds = computed(() => {
   const s = save.value.stats ?? {}
+  const n = (v: number) => v.toLocaleString('ar-EG')
   const lines: string[] = []
-  if (s.flowersGrown) lines.push(`${s.flowersGrown} flowers grown`)
-  if (s.whalesSummoned) lines.push(`${s.whalesSummoned} whales summoned`)
-  if (s.planetsThrown) lines.push(`${s.planetsThrown} planets thrown`)
-  if (s.memoriesCaught) lines.push(`${s.memoriesCaught} memories caught`)
-  if (s.peopleHelped) lines.push(`${s.peopleHelped} strangers warmed`)
-  if (s.buildingsRaised) lines.push(`${s.buildingsRaised} towers raised`)
+  if (s.flowersGrown) lines.push(`${n(s.flowersGrown)} زهور أنبتَّها`)
+  if (s.whalesSummoned) lines.push(`${n(s.whalesSummoned)} حيتان نادتها يدك`)
+  if (s.planetsThrown) lines.push(`${n(s.planetsThrown)} كواكب قذفتها`)
+  if (s.memoriesCaught) lines.push(`${n(s.memoriesCaught)} ذكريات أمسكتها`)
+  if (s.peopleHelped) lines.push(`${n(s.peopleHelped)} قلوب دفّأتها`)
+  if (s.buildingsRaised) lines.push(`${n(s.buildingsRaised)} أبراج رفعتها`)
   return lines.slice(0, 4)
 })
 
@@ -91,64 +92,66 @@ onBeforeUnmount(() => cancelAnimationFrame(raf))
 
     <div class="relative mx-auto flex min-h-screen max-w-6xl flex-col gap-16 px-6 py-[9vh] md:flex-row md:gap-24 md:px-10">
       <!-- A slow radial breath of moonlight behind the title -->
-      <div class="pointer-events-none absolute -left-52 top-[-6vh] h-[70vh] w-[70vh] rounded-full opacity-[0.07]" style="background: radial-gradient(circle, #e8c37a 0%, transparent 65%)" aria-hidden="true" />
-      <!-- Left: the invitation -->
+      <div class="pointer-events-none absolute -end-52 top-[-6vh] h-[70vh] w-[70vh] rounded-full opacity-[0.07]" style="background: radial-gradient(circle, #e8c37a 0%, transparent 65%)" aria-hidden="true" />
+
+      <!-- The invitation -->
       <header class="md:sticky md:top-[9vh] md:h-fit md:w-[42%]">
-        <p class="font-ui text-[11px] font-medium uppercase tracking-[0.45em] text-bone-dim">
-          an interactive dream · ten worlds
+        <p class="font-ui text-sm font-medium text-bone-dim">
+          حلمٌ تفاعلي · عشرة عوالم
         </p>
-        <h1 class="mt-6 font-display text-6xl font-light leading-[0.95] md:text-7xl lg:text-8xl">
-          The Hand<br /><em class="text-moon">Journey</em>
+        <h1 class="mt-6 font-display text-6xl font-normal leading-tight md:text-7xl lg:text-8xl">
+          رحلة اليد<br /><span class="text-moon">السحرية</span>
         </h1>
-        <p class="mt-8 max-w-sm font-display text-xl font-light italic leading-relaxed text-bone-dim">
-          There are no buttons past this point. Your hands, seen by your
-          camera, are the only interface. Nothing is recorded — nothing
-          leaves this device.
+        <p class="mt-8 max-w-sm font-ui text-lg font-normal leading-relaxed text-bone-dim">
+          لا أزرار هنا! يدك هي العصا السحرية —
+          الكاميرا تراها، فتتحرك العوالم.
+          لا شيء يُسجَّل، ولا شيء يغادر جهازك.
         </p>
 
         <div class="mt-12 flex flex-col gap-4">
           <NuxtLink
             to="/journey"
-            class="group w-fit font-ui text-sm font-medium uppercase tracking-[0.35em] text-moon transition-colors hover:text-bone focus-visible:outline focus-visible:outline-offset-8 focus-visible:outline-moon"
+            class="group w-fit font-ui text-lg font-bold text-moon transition-colors hover:text-bone focus-visible:outline focus-visible:outline-offset-8 focus-visible:outline-moon"
           >
             <span class="mb-3 block h-px w-24 bg-moon/60 transition-all duration-500 group-hover:w-full" aria-hidden="true" />
-            {{ resumeChapter ? `resume · ${resumeChapter.numeral} ${resumeChapter.title}` : 'begin the journey' }}
+            {{ resumeChapter ? `أكمل الرحلة · ${resumeChapter.numeral} ${resumeChapter.title}` : 'ابدأ الرحلة ✨' }}
           </NuxtLink>
-          <p class="font-ui text-[10px] uppercase tracking-[0.3em] text-bone-dim/60">
-            headphones recommended · hands tracked on-device
+          <p class="font-ui text-xs text-bone-dim/60">
+            ننصح بسماعات الرأس · تتبُّع اليد يتم على جهازك فقط
           </p>
         </div>
 
-        <p v-if="deeds.length" class="mt-14 max-w-xs font-display text-sm italic leading-loose text-bone-dim/80">
-          So far, this pair of hands has left its mark —
+        <p v-if="deeds.length" class="mt-14 max-w-xs font-ui text-sm leading-loose text-bone-dim/80">
+          حتى الآن، صنعت هاتان اليدان الصغيرتان —
           <span class="text-bone-dim">{{ deeds.join(' · ') }}.</span>
         </p>
       </header>
 
-      <!-- Right: the index of worlds -->
-      <nav class="flex-1" aria-label="The ten worlds">
+      <!-- The index of worlds -->
+      <nav class="flex-1" aria-label="العوالم العشرة">
         <ol>
           <li v-for="c in CHAPTERS" :key="c.id" class="group border-b border-bone/[0.07] first:border-t">
             <NuxtLink
               :to="`/journey?world=${c.id}`"
-              class="flex items-baseline gap-5 py-5 transition-transform duration-500 ease-out hover:translate-x-2 focus-visible:translate-x-2 focus-visible:outline-none md:gap-8"
+              class="flex items-baseline gap-5 py-5 transition-transform duration-500 ease-out hover:-translate-x-2 focus-visible:-translate-x-2 focus-visible:outline-none md:gap-8"
               @mouseenter="hovered = c.id"
               @mouseleave="hovered = null"
               @focus="hovered = c.id"
               @blur="hovered = null"
             >
               <span
-                class="w-10 shrink-0 font-ui text-[11px] font-medium uppercase tracking-[0.3em] transition-colors duration-300"
+                class="w-10 shrink-0 font-display text-xl font-bold transition-colors duration-300"
                 :style="{ color: hovered === c.id || completed.has(c.id) ? c.accent : 'var(--color-bone-dim)' }"
               >{{ c.numeral }}</span>
 
               <span class="flex-1">
                 <span
-                  class="block font-display text-3xl font-light transition-colors duration-300 md:text-4xl"
+                  class="block font-display text-3xl font-normal transition-all duration-300 md:text-4xl"
                   :class="hovered === c.id ? 'text-bone' : 'text-bone/80'"
+                  :style="hovered === c.id ? { textShadow: `0 0 32px ${c.accent}66` } : {}"
                 >{{ c.title }}</span>
                 <span
-                  class="block max-w-md overflow-hidden font-display text-base font-light italic text-bone-dim transition-all duration-500"
+                  class="block max-w-md overflow-hidden font-ui text-base font-normal text-bone-dim transition-all duration-500"
                   :class="hovered === c.id ? 'mt-1 max-h-8 opacity-100' : 'max-h-0 opacity-0'"
                 >{{ c.subtitle }}</span>
               </span>
@@ -157,19 +160,19 @@ onBeforeUnmount(() => cancelAnimationFrame(raf))
                 v-if="completed.has(c.id)"
                 class="mb-1 h-1.5 w-1.5 shrink-0 self-center"
                 :style="{ background: c.accent, boxShadow: `0 0 8px ${c.accent}` }"
-                :aria-label="`${c.title} — completed`"
+                :aria-label="`${c.title} — أكملتَه`"
               />
               <span
                 v-else
                 class="mb-1 h-1.5 w-1.5 shrink-0 self-center border border-bone/20"
-                :aria-label="`${c.title} — not yet visited`"
+                :aria-label="`${c.title} — لم تزره بعد`"
               />
             </NuxtLink>
           </li>
         </ol>
 
-        <p class="mt-8 text-right font-ui text-[10px] uppercase tracking-[0.3em] text-bone-dim/50">
-          enter any world directly — the journey remembers
+        <p class="mt-8 text-start font-ui text-xs text-bone-dim/50">
+          ادخل أي عالمٍ مباشرة — الرحلة تتذكّرك دائمًا
         </p>
       </nav>
     </div>

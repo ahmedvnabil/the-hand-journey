@@ -90,7 +90,7 @@ export default class OceanScene extends BaseScene {
     this.add(this.spray.points)
     this.track(() => this.spray.dispose())
 
-    this.hint('The sea copies your hand. Move it — stir the water.', 9000)
+    this.hint('البحر يقلّد يدك! حرّكها… وحرّك الأمواج معها!', 9000)
   }
 
   private buildWater(): void {
@@ -261,7 +261,7 @@ export default class OceanScene extends BaseScene {
     this.ctx.story.record('whalesSummoned')
     if (!this.whaleEver) {
       this.whaleEver = true
-      this.hint('It heard you. Now hold your palm open to the sky — call the weather.', 9000)
+      this.hint('الحوت سمع نداءك! الآن افتح كفّك نحو السماء واثبت… لتبدأ مغامرة المطر والبرق!', 9000)
     }
   }
 
@@ -287,14 +287,14 @@ export default class OceanScene extends BaseScene {
       this.stormEver = true
       this.ctx.audio.rumble(4, 0.5)
       this.ctx.story.record('stormsCalled')
-      this.hint('The sky answers. Hold your open palm again to calm it.', 9000)
+      this.hint('يا لها من مغامرة! افتح كفّك مرّة أخرى واثبت… لتهدأ السماء وتنام الأمواج.', 9000)
     } else {
       this.ctx.audio.whoosh(3, 900, 180, 0.2)
       if (this.stormEver && !this.done) {
         this.done = true
         this.timeline({ delay: 4.5 }).call(() => {
           this.complete()
-          this.hint('You taught a storm stillness. Swipe up to sail on.', 10000)
+          this.hint('علّمت العاصفة الهدوء! اسحب يدك لأعلى لتكمل الرحلة', 10000)
         })
       }
     }
@@ -325,7 +325,7 @@ export default class OceanScene extends BaseScene {
     this.waveMeter += this.handEnergy * dt
     if (this.waveMeter > 5 && !this.pinchHinted) {
       this.pinchHinted = true
-      this.hint('Pinch the surface. Something vast has heard you.', 9000)
+      this.hint('اقرص سطح الماء… صديق ضخم لطيف سيأتي ليحيّيك!', 9000)
     }
     if (this.stormLevel > 0.55) {
       this.lightningIn -= dt

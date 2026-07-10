@@ -127,7 +127,7 @@ export default class EgyptScene extends BaseScene {
     this.add(this.dust.points)
     this.track(() => this.dust.dispose())
 
-    this.hint('Kings sleep under geometry. Point at the tomb door — and hold.', 9000)
+    this.hint('هنا ينام الملوك القدماء… أشِر بإصبعك نحو باب المقبرة واثبت!', 9000)
   }
 
   private buildPyramids(): void {
@@ -302,7 +302,7 @@ export default class EgyptScene extends BaseScene {
       y: 2.3, z: 2.4, duration: 3.4, delay: 1.6, ease: 'power2.inOut',
       onComplete: () => {
         this.artifactFree = true
-        this.hint('It floats to meet you. Close your fist around it.', 9000)
+        this.hint('الجعران الذهبي يطير نحوك! أغلق قبضتك عليه وأمسكه.', 9000)
       },
     })
   }
@@ -313,14 +313,14 @@ export default class EgyptScene extends BaseScene {
     this.ctx.story.record('artifactsHeld')
     if (!this.heldOnce) {
       this.heldOnce = true
-      this.hint('Roll your wrist — the scarab turns with you. The old ones rise to watch.', 9000)
+      this.hint('دوّر معصمك… فيدور الجعران معك! وأرواح النور اللطيفة تطلّ لتشاهد.', 9000)
       for (const spirit of this.spirits) this.ctx.audio.chimeAt(spirit.group.position, 196, 3, 0.08)
       if (this.doorOpen && !this.done) {
         this.done = true
         this.timeline({ delay: 6 }).call(() => {
           this.ctx.audio.setIntensity(0.65)
           this.complete()
-          this.hint('The scarab chose your hand. Swipe up — the desert lets you go.', 10000)
+          this.hint('الجعران اختار يدك! اسحب يدك لأعلى لتكمل الرحلة', 10000)
         })
       }
     }

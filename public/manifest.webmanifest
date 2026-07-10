@@ -1,7 +1,9 @@
 {
-  "name": "The Hand Journey",
-  "short_name": "Hand Journey",
-  "description": "An interactive dream controlled entirely by your hands. Ten worlds. No buttons.",
+  "name": "رحلة اليد السحرية",
+  "short_name": "رحلة اليد",
+  "description": "حلم تفاعلي تتحكم فيه بيديك. عشرة عوالم بلا أزرار.",
+  "lang": "ar",
+  "dir": "rtl",
   "start_url": "/",
   "display": "fullscreen",
   "orientation": "landscape",

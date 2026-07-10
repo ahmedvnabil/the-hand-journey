@@ -15,13 +15,13 @@ defineProps<{
       leave-to-class="opacity-0"
       mode="out-in"
     >
-      <p v-if="text" :key="text" class="max-w-md font-display text-xl font-light italic leading-snug text-bone/90" role="status">
+      <p v-if="text" :key="text" class="max-w-lg font-display text-2xl font-normal leading-snug text-bone/95 md:text-3xl" role="status">
         {{ text }}
       </p>
     </Transition>
 
-    <p v-if="complete" class="thj-breathe font-ui text-[10px] font-medium uppercase tracking-[0.45em] text-moon" role="status">
-      swipe up to continue ↑
+    <p v-if="complete" class="thj-breathe font-ui text-sm font-bold text-moon" role="status">
+      اسحب يدك لأعلى ↑ لعالمٍ جديد
     </p>
   </div>
 </template>

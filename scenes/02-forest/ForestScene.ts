@@ -103,13 +103,13 @@ export default class ForestScene extends BaseScene {
       emissiveIntensity: 2.2,
     })
 
-    this.hint('Move your hand. The trees lean in to listen.', 8000)
+    this.hint('حرّك يدك… الأشجار تميل لتُصغي إليك!', 8000)
     this.timeline({ delay: 9 }).call(() => {
-      if (this.phase === 'grove') this.hint('Pinch the dark. A flower answers.', 8000)
+      if (this.phase === 'grove') this.hint('اقرص الهواء… وستُولد زهرة من نور!', 8000)
     })
     this.timeline({ delay: 19 }).call(() => {
       if (this.phase !== 'path-open' && !this.birdsInFlight)
-        this.hint('Wave at the treetops. Something is waiting to leave.', 7000)
+        this.hint('لوّح بيدك نحو قمم الأشجار… العصافير تنتظر لتطير!', 7000)
     })
   }
 
@@ -230,7 +230,7 @@ export default class ForestScene extends BaseScene {
 
     if (this.flowerCount === 3 && this.phase === 'grove') {
       this.phase = 'blooming'
-      this.hint('Three lights in the moss. Hold your palm open — the forest decides.', 9000)
+      this.hint('ثلاث زهرات تلمع! افتح كفّك واثبت… الغابة تخبّئ لك سرًّا جميلًا!', 9000)
     }
   }
 
@@ -273,7 +273,7 @@ export default class ForestScene extends BaseScene {
       this.phase = 'path-open'
       this.ctx.audio.setIntensity(0.6)
       this.complete()
-      this.hint('The way through is lit. Swipe up to follow it.', 10000)
+      this.hint('أضاء الطريق السحري بين الأشجار! اسحب يدك لأعلى لتكمل الرحلة', 10000)
     }, undefined, this.stones.length * 0.17 + 0.8)
   }
 

@@ -28,13 +28,13 @@ onBeforeUnmount(() => timer && clearTimeout(timer))
     :class="visible ? 'translate-y-0 opacity-100' : '-translate-y-3 opacity-0'"
     aria-live="polite"
   >
-    <p class="font-ui text-[10px] font-medium uppercase tracking-[0.5em]" :style="{ color: chapter.accent }">
+    <p class="font-display text-2xl font-bold" :style="{ color: chapter.accent }">
       {{ chapter.numeral }}
     </p>
-    <h2 class="mt-3 font-display text-5xl font-light text-bone md:text-7xl">
+    <h2 class="mt-2 font-display text-5xl font-normal text-bone md:text-7xl" :style="{ textShadow: `0 0 40px ${chapter.accent}55` }">
       {{ chapter.title }}
     </h2>
-    <p class="mt-4 max-w-sm font-display text-lg font-light italic text-bone-dim">
+    <p class="mt-4 max-w-md font-ui text-xl font-normal text-bone-dim">
       {{ chapter.subtitle }}
     </p>
   </div>

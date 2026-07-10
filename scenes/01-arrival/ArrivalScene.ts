@@ -66,7 +66,7 @@ export default class ArrivalScene extends BaseScene {
     key.position.set(0, 4, 6)
     this.add(key)
 
-    this.hint('Raise your open hand into the dark.', 9000)
+    this.hint('افتح كفّك وارفعه نحو الظلام…', 9000)
   }
 
   override onHands(frame: HandsFrame): void {
@@ -78,7 +78,7 @@ export default class ArrivalScene extends BaseScene {
 
     if (this.phase === 'void' && calling) {
       this.phase = 'gathering'
-      this.hint('Hold it there. The dust is listening.', 7000)
+      this.hint('اثبت مكانك… الغبار يسمعك الآن!', 7000)
       this.ctx.audio.whoosh(2.4, 120, 900, 0.18)
     }
 
@@ -114,7 +114,7 @@ export default class ArrivalScene extends BaseScene {
           this.ctx.audio.chime(495, 5, 0.2)
           this.ctx.audio.setIntensity(0.7)
           this.complete()
-          this.hint('The door is open. Swipe up to step through.', 10000)
+          this.hint('الباب انفتح! ✨ اسحب يدك لأعلى لتكمل الرحلة', 10000)
         })
         .to(this, { ringOpacity: 1, duration: 2.5, ease: 'power2.out' }, 0)
         .to(this.core.scale, { x: 4.5, y: 4.5, duration: 3.5, ease: 'power3.out' }, 0.4)

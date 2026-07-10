@@ -6,20 +6,20 @@ const { quality, muted, setQuality, toggleMute, toggleFullscreen, photo, restart
 // The dock stays invisible until summoned — the dream shouldn't have a settings panel floating in it.
 const open = ref(false)
 const tiers: Array<{ id: QualityTier; label: string }> = [
-  { id: 'performance', label: 'performance' },
-  { id: 'balanced', label: 'balanced' },
-  { id: 'ultra', label: 'ultra' },
+  { id: 'performance', label: 'خفيف' },
+  { id: 'balanced', label: 'متوازن' },
+  { id: 'ultra', label: 'فائق' },
 ]
 </script>
 
 <template>
-  <div class="absolute right-5 top-5 z-10 flex flex-col items-end gap-3 font-ui">
+  <div class="absolute end-5 top-5 z-10 flex flex-col items-end gap-3 font-ui">
     <button
-      class="text-[10px] font-medium uppercase tracking-[0.35em] text-bone-dim transition-colors hover:text-bone focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-moon"
+      class="text-sm font-medium text-bone-dim transition-colors hover:text-bone focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-moon"
       :aria-expanded="open"
       @click="open = !open"
     >
-      {{ open ? 'close' : 'menu' }}
+      {{ open ? 'إغلاق' : 'القائمة' }}
     </button>
 
     <Transition
@@ -28,11 +28,11 @@ const tiers: Array<{ id: QualityTier; label: string }> = [
       leave-active-class="transition-all duration-200 ease-in"
       leave-to-class="opacity-0"
     >
-      <nav v-if="open" class="flex flex-col items-end gap-2 text-right" aria-label="Experience settings">
-        <NuxtLink to="/" class="text-[10px] uppercase tracking-[0.25em] text-moon transition-colors hover:text-bone">
-          all worlds
+      <nav v-if="open" class="flex flex-col items-end gap-2 text-end" aria-label="إعدادات التجربة">
+        <NuxtLink to="/" class="text-sm text-moon transition-colors hover:text-bone">
+          كل العوالم
         </NuxtLink>
-        <div class="flex gap-3 text-[10px] uppercase tracking-[0.25em]">
+        <div class="flex gap-3 text-sm">
           <button
             v-for="tier in tiers"
             :key="tier.id"
@@ -43,20 +43,20 @@ const tiers: Array<{ id: QualityTier; label: string }> = [
             {{ tier.label }}
           </button>
         </div>
-        <button class="text-[10px] uppercase tracking-[0.25em] text-bone-dim transition-colors hover:text-bone" @click="toggleMute()">
-          sound · {{ muted ? 'off' : 'on' }}
+        <button class="text-sm text-bone-dim transition-colors hover:text-bone" @click="toggleMute()">
+          الصوت · {{ muted ? 'صامت' : 'يعمل' }}
         </button>
-        <button class="text-[10px] uppercase tracking-[0.25em] text-bone-dim transition-colors hover:text-bone" @click="toggleFullscreen()">
-          fullscreen · F
+        <button class="text-sm text-bone-dim transition-colors hover:text-bone" @click="toggleFullscreen()">
+          ملء الشاشة · F
         </button>
-        <button class="text-[10px] uppercase tracking-[0.25em] text-bone-dim transition-colors hover:text-bone" @click="photo()">
-          photo · P
+        <button class="text-sm text-bone-dim transition-colors hover:text-bone" @click="photo()">
+          التقط صورة · P
         </button>
-        <button class="text-[10px] uppercase tracking-[0.25em] text-bone-dim/60 transition-colors hover:text-bone" @click="restart()">
-          forget my journey
+        <button class="text-sm text-bone-dim/60 transition-colors hover:text-bone" @click="restart()">
+          انسَ رحلتي
         </button>
-        <p class="mt-1 max-w-[180px] text-[9px] leading-relaxed tracking-wider text-bone-dim/50">
-          keys: ← → worlds · N skip · pointer mode: click = pinch, long-press = fist, wheel = depth, Q/E = rotate
+        <p class="mt-1 max-w-[200px] text-xs leading-relaxed text-bone-dim/50">
+          المفاتيح: ← → للتنقل · N للتخطي · وضع الفأرة: ضغطة = قرصة، ضغطة مطوّلة = قبضة، العجلة = قرب/بُعد
         </p>
       </nav>
     </Transition>

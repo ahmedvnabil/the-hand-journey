@@ -32,7 +32,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <main ref="containerRef" class="relative h-full w-full touch-none overflow-hidden bg-ink" aria-label="The Hand Journey — an interactive story controlled by your hands">
+  <main ref="containerRef" class="relative h-full w-full touch-none overflow-hidden bg-ink" aria-label="رحلة اليد السحرية — حكاية تفاعلية تتحكم فيها بيديك">
     <canvas ref="canvasRef" class="absolute inset-0 h-full w-full" aria-hidden="true" />
 
     <!-- Transition veil: the darkness between worlds -->

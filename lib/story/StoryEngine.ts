@@ -128,16 +128,17 @@ export class StoryEngine extends Emitter<StoryEvents> {
   /** The Finale reads this aloud, line by line. */
   personalizedEnding(): string[] {
     const s = this.stats
+    const n = (v: number) => v.toLocaleString('ar-EG')
     const lines: string[] = []
-    if (s.flowersGrown > 0) lines.push(`You grew ${s.flowersGrown} ${s.flowersGrown === 1 ? 'flower' : 'flowers'} out of darkness.`)
-    if (s.whalesSummoned > 0) lines.push(`${s.whalesSummoned === 1 ? 'A whale' : `${s.whalesSummoned} whales`} rose because you asked.`)
-    if (s.tombsOpened > 0) lines.push(`You opened doors that were sealed for three thousand years.`)
-    if (s.planetsThrown > 0) lines.push(`You threw ${s.planetsThrown === 1 ? 'a planet' : `${s.planetsThrown} planets`} across the dark, and the dark forgave you.`)
-    if (s.memoriesCaught > 0) lines.push(`You caught ${s.memoriesCaught} ${s.memoriesCaught === 1 ? 'memory' : 'memories'} before they faded.`)
-    if (s.peopleHelped > 0) lines.push(`${s.peopleHelped} ${s.peopleHelped === 1 ? 'stranger' : 'strangers'} felt your palm open toward them.`)
-    if (s.buildingsRaised > 0) lines.push(`A city changed its mind because of you.`)
-    if (lines.length === 0) lines.push('You walked through ten worlds and left them exactly as beautiful as you found them.')
-    lines.push('The journey ends. Your hands remember the way back.')
+    if (s.flowersGrown > 0) lines.push(s.flowersGrown === 1 ? 'أنبتَّ زهرةً من قلب الظلام.' : `أنبتَّ ${n(s.flowersGrown)} زهرات من قلب الظلام.`)
+    if (s.whalesSummoned > 0) lines.push(s.whalesSummoned === 1 ? 'صعد حوتٌ من الأعماق لأنك ناديته.' : `صعدت ${n(s.whalesSummoned)} حيتان من الأعماق لأنك ناديتها.`)
+    if (s.tombsOpened > 0) lines.push('فتحتَ أبوابًا ظلّت مغلقةً ثلاثة آلاف عام.')
+    if (s.planetsThrown > 0) lines.push(s.planetsThrown === 1 ? 'قذفتَ كوكبًا عبر الظلام… وسامحك الظلام.' : `قذفتَ ${n(s.planetsThrown)} كواكب عبر الظلام… وسامحك الظلام.`)
+    if (s.memoriesCaught > 0) lines.push(`أمسكتَ ${n(s.memoriesCaught)} ${s.memoriesCaught === 1 ? 'ذكرى' : 'ذكريات'} قبل أن تذوب.`)
+    if (s.peopleHelped > 0) lines.push(`${n(s.peopleHelped)} ${s.peopleHelped === 1 ? 'قلبٌ شعر' : 'قلوب شعرت'} بدفء كفّك المفتوح.`)
+    if (s.buildingsRaised > 0) lines.push('مدينةٌ كاملة غيّرت رأيها من أجلك.')
+    if (lines.length === 0) lines.push('عبرتَ عشرة عوالم، وتركتَها جميلةً تمامًا كما وجدتها.')
+    lines.push('انتهت الرحلة… ويداك تحفظان طريق العودة.')
     return lines
   }
 

@@ -58,7 +58,7 @@ export function textTexture(
   lines: string[],
   opts: { width?: number; height?: number; font?: string; color?: string; background?: string; align?: CanvasTextAlign } = {},
 ): THREE.Texture {
-  const { width = 512, height = 512, font = '42px Georgia', color = '#ece9e2', background = 'transparent', align = 'center' } = opts
+  const { width = 512, height = 512, font = '42px "Aref Ruqaa", "Geeza Pro", serif', color = '#ece9e2', background = 'transparent', align = 'center' } = opts
   const canvas = document.createElement('canvas')
   canvas.width = width
   canvas.height = height

@@ -51,8 +51,8 @@ onMounted(() => {
 onBeforeUnmount(() => cancelAnimationFrame(raf))
 
 const statusLabel = computed(() => {
-  if (props.source === 'pointer') return 'pointer mode'
-  return props.tracking ? 'hands seen' : 'show your hand'
+  if (props.source === 'pointer') return 'وضع الفأرة'
+  return props.tracking ? 'أرى يدك! ✨' : 'أرني يدك'
 })
 </script>
 
@@ -60,8 +60,8 @@ const statusLabel = computed(() => {
   <div class="absolute bottom-5 left-5 z-10 select-none">
     <canvas ref="skeletonRef" width="128" height="96" class="block opacity-80" aria-hidden="true" />
     <button
-      class="mt-1 flex items-center gap-2 font-ui text-[9px] font-medium uppercase tracking-[0.3em] text-bone-dim transition-colors hover:text-bone"
-      :aria-label="`Tracking status: ${statusLabel}. Click to toggle performance readout.`"
+      class="mt-1 flex items-center gap-2 font-ui text-xs font-medium text-bone-dim transition-colors hover:text-bone"
+      :aria-label="`حالة التتبع: ${statusLabel}. اضغط لعرض الأداء.`"
       @click="showFps = !showFps"
     >
       <span
@@ -70,7 +70,7 @@ const statusLabel = computed(() => {
         aria-hidden="true"
       />
       {{ statusLabel }}
-      <span v-if="showFps" class="text-bone-dim/70">· {{ fps }} fps · {{ backend }}</span>
+      <span v-if="showFps" class="text-bone-dim/70" dir="ltr">· {{ fps }} fps · {{ backend }}</span>
     </button>
   </div>
 </template>

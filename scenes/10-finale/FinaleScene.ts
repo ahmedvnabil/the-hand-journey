@@ -58,7 +58,7 @@ export default class FinaleScene extends BaseScene {
     this.add(moon)
     this.add(new THREE.AmbientLight(0x232338, 2))
 
-    this.hint('Everything you touched is still here. Reach out.', 8000)
+    this.hint('كل ما لمستَه ما زال هنا… مُدّ يدك.', 8000)
   }
 
   /** One small monument per world, orbiting the traveler. */
@@ -91,7 +91,7 @@ export default class FinaleScene extends BaseScene {
       }],
       ['#e8a58a', () => new THREE.Mesh( // memory — a photograph
         new THREE.PlaneGeometry(0.6, 0.72),
-        new THREE.MeshBasicMaterial({ map: textTexture(['◻'], { font: 'italic 80px Georgia', color: '#e8a58a' }), transparent: true, opacity: 0.9, side: THREE.DoubleSide }),
+        new THREE.MeshBasicMaterial({ map: textTexture(['◻'], { font: '80px "Aref Ruqaa", serif', color: '#e8a58a' }), transparent: true, opacity: 0.9, side: THREE.DoubleSide }),
       )],
       ['#7ae8d8', () => new THREE.Mesh( // lab — a hologram panel
         new THREE.PlaneGeometry(0.7, 0.45),
@@ -176,7 +176,7 @@ export default class FinaleScene extends BaseScene {
       const mesh = new THREE.Mesh(
         new THREE.PlaneGeometry(9, 1.1),
         new THREE.MeshBasicMaterial({
-          map: textTexture([line], { width: 1024, height: 128, font: 'italic 52px Georgia', color: '#f0e6c8' }),
+          map: textTexture([line], { width: 1024, height: 128, font: '52px "Aref Ruqaa", "Geeza Pro", serif', color: '#f0e6c8' }),
           transparent: true,
           opacity: 0,
           depthWrite: false,
@@ -192,7 +192,7 @@ export default class FinaleScene extends BaseScene {
     this.ctx.audio.chime(262, 6, 0.2)
     this.ctx.audio.chime(392, 7, 0.15)
     this.complete()
-    this.hint('Open both hands wide when you are ready to say goodbye.', 12000)
+    this.hint('عندما تكون مستعدًا للوداع… افتح يديك الاثنتين بعيدًا عن بعضهما.', 12000)
   }
 
   private showThanks(): void {
@@ -200,7 +200,7 @@ export default class FinaleScene extends BaseScene {
     const thanks = new THREE.Mesh(
       new THREE.PlaneGeometry(12, 2),
       new THREE.MeshBasicMaterial({
-        map: textTexture(['thank you, traveler'], { width: 1024, height: 170, font: 'italic 84px Georgia', color: '#ffffff' }),
+        map: textTexture(['شكرًا لك أيها المسافر الصغير'], { width: 1024, height: 170, font: '84px "Aref Ruqaa", "Geeza Pro", serif', color: '#ffffff' }),
         transparent: true,
         opacity: 0,
         depthWrite: false,
@@ -214,7 +214,7 @@ export default class FinaleScene extends BaseScene {
     this.ctx.audio.chime(523, 8, 0.25)
     this.ctx.audio.chime(659, 8, 0.2)
     this.ctx.audio.chime(784, 9, 0.15)
-    this.hint('The journey remembers you. It always will.', 15000)
+    this.hint('الرحلة تتذكّرك… وستظل تتذكّرك دائمًا. 🌟', 15000)
   }
 
   update(dt: number, elapsed: number): void {

@@ -96,7 +96,7 @@ export default class CityScene extends BaseScene {
     this.updateBuildings(1 - this.day)
     this.updateVehicles(0, 1 - this.day)
 
-    this.hint('The city is listening. Point at a tower and hold.', 10000)
+    this.hint('المدينةُ تُصغي إليك. أشِر بإصبعك إلى برجٍ واثبت.', 10000)
   }
 
   private buildGround(): void {
@@ -216,7 +216,7 @@ export default class CityScene extends BaseScene {
       if (!this.dayShifted && this.dayTravel > 0.55) {
         this.dayShifted = true
         this.checkDone()
-        if (!this.done) this.hint('Spread both hands wide. Let the plaza bloom.', 8000)
+        if (!this.done) this.hint('افتح يديك الاثنتين بعيدًا عن بعضهما، ودَع الساحةَ تتفتّحُ كزهرة!', 8000)
       }
     }
     this.prevPalmY = hand.palm.y
@@ -234,7 +234,7 @@ export default class CityScene extends BaseScene {
     const first = !this.trafficChanged
     this.trafficChanged = true
     this.checkDone()
-    if (first && !this.done) this.hint('Open your palm. Raise it for dawn, lower it for night.', 8000)
+    if (first && !this.done) this.hint('افتح كفّك. ارفعه ليطلعَ الفجر، وأخفضه ليأتيَ الليل.', 8000)
   }
 
   private raiseTower(): void {
@@ -255,7 +255,7 @@ export default class CityScene extends BaseScene {
       this.tween(this.heightMul, { [j]: 1.1, duration: 0.7, delay: d * 0.08, yoyo: true, repeat: 1, ease: 'sine.inOut' })
     }
     this.checkDone()
-    if (this.raised.size === 1 && !this.done) this.hint('It remembers being taller. Swipe — the traffic will follow.', 8000)
+    if (this.raised.size === 1 && !this.done) this.hint('البرجُ يتذكّرُ عُلوَّه! اسحب بيدك جانبًا — والسياراتُ الطائرةُ ستتبعك.', 8000)
   }
 
   private plazaBloom(): void {
@@ -281,7 +281,7 @@ export default class CityScene extends BaseScene {
     if (this.done || this.raised.size < 2 || !this.trafficChanged || !this.dayShifted) return
     this.done = true
     this.complete()
-    this.hint('The skyline answers to you now. Swipe up when you are ready.', 12000)
+    this.hint('المدينةُ كلُّها تستجيبُ ليدك الآن. اسحب يدك لأعلى لتكمل الرحلة', 12000)
   }
 
   update(dt: number, elapsed: number): void {

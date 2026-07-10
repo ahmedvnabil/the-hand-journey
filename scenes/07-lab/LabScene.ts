@@ -213,7 +213,7 @@ export default class LabScene extends BaseScene {
     this.assistant = makeGlowSprite(this.chapter.accent, 0.55, 0.9)
     this.add(this.sculptureGroup, this.assistant)
 
-    this.hint('Point to focus. Grab to move. The data likes being touched.', 9000)
+    this.hint('أشِر بإصبعك لتضيء اللوحة، وأمسكها لتحرّكها. البياناتُ تحبُّ اللمس!', 9000)
   }
 
   override onHands(frame: HandsFrame): void {
@@ -236,7 +236,7 @@ export default class LabScene extends BaseScene {
       if (!this.hasScaled && Math.abs(this.targetScale - 1) > 0.45) {
         this.hasScaled = true
         this.speak()
-        this.hint('The sculpture obeys the distance between your hands.', 5000)
+        this.hint('مجسّم النجوم الرقمي يطيعُ المسافةَ بين يديك!', 5000)
         this.checkComplete()
       }
     }
@@ -258,8 +258,8 @@ export default class LabScene extends BaseScene {
       if (!panel.moved) { panel.moved = true; this.movedCount++ }
       this.ctx.audio.chime(560, 0.7, 0.12)
       this.speak()
-      if (this.movedCount === 1) this.hint('Rearrange the room. Then pinch the chart to scrub time.', 7000)
-      if (this.movedCount === 2 && !this.hasScaled) this.hint('Now spread both hands — the sculpture is listening.', 7000)
+      if (this.movedCount === 1) this.hint('رتّب الغرفةَ كما تحب، ثم اقرص الرسمَ واسحب لتلعبَ بالزمن.', 7000)
+      if (this.movedCount === 2 && !this.hasScaled) this.hint('والآن افتح يديك الاثنتين بعيدًا عن بعضهما — مجسّم النجوم الرقمي يُصغي إليك.', 7000)
       this.checkComplete()
     }
 
@@ -300,7 +300,7 @@ export default class LabScene extends BaseScene {
     this.ctx.audio.setIntensity(0.7)
     this.ctx.audio.chime(659, 2.5, 0.2)
     this.complete()
-    this.hint('The lab approves. Swipe up to continue.', 10000)
+    this.hint('أحسنت! المساعد الصغير فخورٌ بك. اسحب يدك لأعلى لتكمل الرحلة', 10000)
   }
 
   update(dt: number, elapsed: number): void {

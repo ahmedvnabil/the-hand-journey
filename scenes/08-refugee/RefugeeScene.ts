@@ -74,7 +74,7 @@ export default class RefugeeScene extends BaseScene {
     this.buildCheckpoint()
     this.buildOthers()
 
-    this.hint('Some journeys begin by leaving. Open your palm to the door.', 10000)
+    this.hint('بعض الرحلات تبدأ بالرحيل. افتح كفّك نحو الباب.', 10000)
   }
 
   private buildDoor(): void {
@@ -225,7 +225,7 @@ export default class RefugeeScene extends BaseScene {
     this.tween(this.coneMat, { opacity: 0.09, duration: slow * 0.9, delay: slow * 0.2, ease: 'sine.inOut' })
     this.tween(this.spill, { intensity: 6, duration: slow, ease: 'sine.inOut' })
     this.timeline({ delay: slow + 0.5 }).call(() => {
-      this.advance(PAPERS_Z, 'papers', 'What fits in a hand? Gather what proves you exist.')
+      this.advance(PAPERS_Z, 'papers', 'ما الذي تحمله يدٌ واحدة؟ اقرص الأوراق واجمعها.')
     })
   }
 
@@ -271,13 +271,13 @@ export default class RefugeeScene extends BaseScene {
     if (Math.cos(this.sweep) > -0.2) {
       if (this.now - this.lastWaitHint > 5) {
         this.lastWaitHint = this.now
-        this.hint('Not yet. Breathe.', 3500)
+        this.hint('ليس بعد… خذ نفسًا.', 3500)
       }
       return
     }
     this.phase = 'passing'
-    this.hint('Now. Steady.', 4000)
-    this.advance(OTHERS_Z, 'others', 'You are not the first to cross. Open your hand toward them.')
+    this.hint('الآن… بهدوء وثبات.', 4000)
+    this.advance(OTHERS_Z, 'others', 'لستَ أوّل من يعبر. افتح كفّك نحوهم.')
   }
 
   private warmFigure(index: number): void {
@@ -307,7 +307,7 @@ export default class RefugeeScene extends BaseScene {
     this.tween(this.memorialMat, { opacity: 0.7, duration: 4, delay: 1.5, ease: 'sine.inOut' })
     this.timeline({ delay: 3 }).call(() => {
       this.complete()
-      this.hint('Carry them with you. Swipe up when you are ready.', 12000)
+      this.hint('احملهم معك في قلبك. اسحب يدك لأعلى لتكمل الرحلة', 12000)
     })
   }
 
@@ -370,9 +370,9 @@ function memorialTexture(): THREE.CanvasTexture {
   const canvas = document.createElement('canvas')
   canvas.width = 1024; canvas.height = 192
   const c = canvas.getContext('2d')!
-  c.font = 'italic 64px Georgia'; c.fillStyle = '#b6afa2'
+  c.font = '64px "Aref Ruqaa", "Geeza Pro", serif'; c.fillStyle = '#b6afa2'
   c.textAlign = 'center'; c.textBaseline = 'middle'
-  c.fillText('no one crosses alone', 512, 96)
+  c.fillText('لا أحد يعبر وحده', 512, 96)
   const tex = new THREE.CanvasTexture(canvas)
   tex.colorSpace = THREE.SRGBColorSpace
   return tex

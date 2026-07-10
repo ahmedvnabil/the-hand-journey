@@ -6,8 +6,11 @@
   --color-bone: #ece9e2;
   --color-bone-dim: #9b978d;
   --color-moon: #e8c37a;
-  --font-display: 'Cormorant Garamond', 'Times New Roman', serif;
-  --font-ui: 'Archivo', 'Helvetica Neue', sans-serif;
+  /* Arabic pairing: Aref Ruqaa = the storyteller's calligraphy for titles,
+     Tajawal = friendly rounded UI. NEVER letter-space Arabic — it breaks
+     the connected script. */
+  --font-display: 'Aref Ruqaa', 'Geeza Pro', serif;
+  --font-ui: 'Tajawal', 'Geeza Pro', sans-serif;
 }
 
 html,
