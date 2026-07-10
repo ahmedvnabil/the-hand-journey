@@ -1,0 +1,29 @@
+{
+  "name": "the-hand-journey",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "An interactive dream controlled entirely by your hands.",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "typecheck": "nuxt typecheck",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@mediapipe/tasks-vision": "^0.10.22",
+    "gsap": "^3.13.0",
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.0",
+    "@types/node": "^24",
+    "@types/three": "^0.180.0",
+    "nuxt": "^4.1.0",
+    "tailwindcss": "^4.1.0",
+    "typescript": "^5.7.0",
+    "vue-tsc": "^3.0.0"
+  }
+}

@@ -1,0 +1,52 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-ink: #07070d;
+  --color-ink-2: #0c0c16;
+  --color-bone: #ece9e2;
+  --color-bone-dim: #9b978d;
+  --color-moon: #e8c37a;
+  --font-display: 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-ui: 'Archivo', 'Helvetica Neue', sans-serif;
+}
+
+html,
+body,
+#__nuxt {
+  height: 100%;
+  background: var(--color-ink);
+  color: var(--color-bone);
+  overscroll-behavior: none;
+}
+
+body {
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* The single custom utility this project allows itself: a slow shimmer
+   used on narrative text. Everything else is Tailwind. */
+@keyframes thj-breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.thj-breathe {
+  animation: thj-breathe 4.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thj-breathe {
+    animation: none;
+    opacity: 0.9;
+  }
+}
+
+::selection {
+  background: color-mix(in oklch, var(--color-moon) 40%, transparent);
+}
