@@ -13,6 +13,10 @@ bun install
 bun run dev        # http://localhost:3000 — allow the camera when asked
 ```
 
+Routes: `/` is the home page — an index of all ten worlds with your
+progress; `/journey` is the experience itself (`/journey?world=space`
+deep-links straight into a world).
+
 Production:
 
 ```bash

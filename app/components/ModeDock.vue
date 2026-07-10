@@ -29,6 +29,9 @@ const tiers: Array<{ id: QualityTier; label: string }> = [
       leave-to-class="opacity-0"
     >
       <nav v-if="open" class="flex flex-col items-end gap-2 text-right" aria-label="Experience settings">
+        <NuxtLink to="/" class="text-[10px] uppercase tracking-[0.25em] text-moon transition-colors hover:text-bone">
+          all worlds
+        </NuxtLink>
         <div class="flex gap-3 text-[10px] uppercase tracking-[0.25em]">
           <button
             v-for="tier in tiers"

@@ -29,7 +29,12 @@ export const useExperience = () => {
 
   let hintTimer: ReturnType<typeof setTimeout> | null = null
 
-  const start = async (canvas: HTMLCanvasElement, container: HTMLElement, input: 'camera' | 'pointer') => {
+  const start = async (
+    canvas: HTMLCanvasElement,
+    container: HTMLElement,
+    input: 'camera' | 'pointer',
+    startChapter?: string,
+  ) => {
     stage.value = 'starting'
     inputSource.value = input
     try {
@@ -37,6 +42,7 @@ export const useExperience = () => {
       const experience = new Experience({
         input,
         reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+        startChapter,
       })
       ;(globalThis as Record<string, unknown>).__thj = experience
 

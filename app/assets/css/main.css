@@ -50,3 +50,21 @@ body {
 ::selection {
   background: color-mix(in oklch, var(--color-moon) 40%, transparent);
 }
+
+/* Crossing between the home page and the journey passes through darkness. */
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.6s ease;
+}
+
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-enter-active,
+  .page-leave-active {
+    transition-duration: 0.1s;
+  }
+}

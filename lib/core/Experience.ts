@@ -32,6 +32,8 @@ export interface ExperienceOptions {
   input: 'camera' | 'pointer'
   quality?: QualityTier
   reducedMotion?: boolean
+  /** Chapter id to open directly (deep link from the home page). */
+  startChapter?: string
 }
 
 /**
@@ -104,6 +106,9 @@ export class Experience extends Emitter<ExperienceEvents> {
 
     // Wire story → scene switching and event forwarding to the UI layer.
     this.story.restore()
+    // Deep link: jump before listeners are wired, so no transition fires —
+    // the first switchTo below simply opens the requested world.
+    if (this.options.startChapter) this.story.goTo(this.options.startChapter)
     this.story.on('chapter-change', ({ chapter }) => void this.switchTo(chapter))
     this.story.on('chapter-complete', ({ chapter }) => this.emit('chapter-complete', chapter))
     this.story.on('hint', (hint) => this.emit('hint', hint))

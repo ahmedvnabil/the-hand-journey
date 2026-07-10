@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import type { Stage } from '~/composables/useExperience'
+import type { ChapterDef } from '@engine/story/chapters'
 
 defineProps<{
   stage: Stage
   error: string
+  /** Set when the traveler deep-linked into a specific world. */
+  destination?: ChapterDef | null
 }>()
 
 const emit = defineEmits<{ begin: [input: 'camera' | 'pointer'] }>()
@@ -13,7 +16,10 @@ const emit = defineEmits<{ begin: [input: 'camera' | 'pointer'] }>()
   <!-- The threshold: the only screen with anything resembling a control. -->
   <div class="absolute inset-0 z-20 flex flex-col items-center justify-between bg-ink px-6 py-[8vh] text-center">
     <p class="font-ui text-[11px] font-medium uppercase tracking-[0.4em] text-bone-dim">
-      an interactive dream · ten worlds
+      <template v-if="destination">
+        entering · <span :style="{ color: destination.accent }">{{ destination.numeral }} {{ destination.title }}</span>
+      </template>
+      <template v-else>an interactive dream · ten worlds</template>
     </p>
 
     <div class="max-w-2xl">
