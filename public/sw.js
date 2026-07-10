@@ -3,8 +3,10 @@
  * Cache-first for hashed build assets, network-first for navigation.
  * MediaPipe wasm/model come from CDNs and are cached opportunistically.
  */
-const CACHE = 'thj-v1'
-const SHELL = ['/', '/manifest.webmanifest', '/icons/icon.svg']
+const CACHE = 'thj-v2'
+// Scope-relative so the same worker serves / locally and /<repo>/ on Pages.
+const BASE = new URL(self.registration.scope).pathname
+const SHELL = [BASE, BASE + 'manifest.webmanifest', BASE + 'icons/icon.svg']
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL)))
@@ -24,7 +26,7 @@ self.addEventListener('fetch', (event) => {
 
   // Navigations: fresh first, shell when offline.
   if (request.mode === 'navigate') {
-    event.respondWith(fetch(request).catch(() => caches.match('/')))
+    event.respondWith(fetch(request).catch(() => caches.match(BASE)))
     return
   }
 

@@ -1,6 +1,10 @@
 import { fileURLToPath } from 'node:url'
 import tailwindcss from '@tailwindcss/vite'
 
+// GitHub Pages serves the site under /<repo>/ — head links must carry the
+// same prefix the router gets from NUXT_APP_BASE_URL.
+const base = process.env.NUXT_APP_BASE_URL ?? '/'
+
 /**
  * The Hand Journey — a gesture-controlled interactive story.
  * SPA mode: the whole experience is a client-side WebGPU/WebGL canvas.
@@ -43,8 +47,8 @@ export default defineNuxtConfig({
         { property: 'og:description', content: 'عشرة عوالم. بلا أزرار. يدك هي العصا السحرية.' },
       ],
       link: [
-        { rel: 'manifest', href: '/manifest.webmanifest' },
-        { rel: 'icon', type: 'image/svg+xml', href: '/icons/icon.svg' },
+        { rel: 'manifest', href: `${base}manifest.webmanifest` },
+        { rel: 'icon', type: 'image/svg+xml', href: `${base}icons/icon.svg` },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         {
