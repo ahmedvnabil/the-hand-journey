@@ -63,8 +63,9 @@ export class PointerFallback {
     const spread = longPress ? 0.03 : this.pressed ? 0.03 : 0.075
     // Joint reach profile per knuckle (mcp, pip, dip, tip). A fist folds the
     // tip BACK inside the pip's radius — that's what the classifier reads as
-    // "curled"; simply shrinking an extended hand still reads as open.
-    const profile = longPress ? [1, 1.6, 1.4, 0.9] : [1, 2, 3, 4]
+    // "curled". The tip must collapse HARD (0.55) so the sticky-pinch
+    // hysteresis lets go and the pose flips to fist.
+    const profile = longPress ? [1, 1.7, 1.2, 0.55] : [1, 2, 3, 4]
 
     const landmarks: Vec3[] = []
     for (let i = 0; i < 21; i++) {

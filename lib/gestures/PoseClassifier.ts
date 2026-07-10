@@ -14,8 +14,12 @@ export interface PoseReading {
 /**
  * Static pose classification from 21 landmarks. All thresholds are normalized
  * by hand size (wrist → middle MCP) so poses read identically near and far.
+ *
+ * `wasPinch` enables hysteresis: kids pinch with finger pads (not tips), so
+ * the measured gap is large and jittery — entering a pinch is forgiving, and
+ * once inside, staying pinched is even more forgiving.
  */
-export function classifyPose(lm: Vec3[]): PoseReading {
+export function classifyPose(lm: Vec3[], wasPinch = false): PoseReading {
   const wrist = lm[LM.WRIST]!
   const handSize = dist(wrist, lm[LM.MIDDLE_MCP]!) || 1e-4
 
@@ -38,8 +42,9 @@ export function classifyPose(lm: Vec3[]): PoseReading {
   // finger itself — in a pinch it arcs forward to meet the thumb (tip stays
   // at/beyond the PIP joint's reach); in a fist it collapses into the palm.
   const indexReach = dist(lm[LM.INDEX_TIP]!, wrist) / (dist(lm[LM.INDEX_PIP]!, wrist) || 1e-4)
-  // Forgiving thresholds — small hands pinch loosely.
-  const isPinch = pinchGap < 0.48 && indexReach > 0.86
+  const isPinch = wasPinch
+    ? pinchGap < 0.8 && indexReach > 0.75 // already pinching: hard to lose
+    : pinchGap < 0.6 && indexReach > 0.84 // entering: forgiving for small hands
 
   let pose: HandPose = 'none'
   if (isPinch) pose = 'pinch'

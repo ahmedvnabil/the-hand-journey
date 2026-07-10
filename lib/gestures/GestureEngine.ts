@@ -156,7 +156,7 @@ export class GestureEngine extends Emitter<GestureEngineEvents> {
     predicted = false,
     motionPalm?: HandState['palm'],
   ): HandState {
-    const reading = classifyPose(landmarks)
+    const reading = classifyPose(landmarks, state.pose === 'pinch')
     const palm = palmCentroid(landmarks)
     const { swipe, speed, wave, velocity } = state.motion.update(motionPalm ?? palm, t)
 
