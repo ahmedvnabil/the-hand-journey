@@ -33,7 +33,7 @@ Continuous channels on every `HandState`:
 | `pinch-start` / `pinch-end` | pinch begins/ends |
 | `grab` | open-palm → fist within 600 ms |
 | `release` | fist → open-palm |
-| `swipe {direction, speed}` | palm travels >0.16 units at >1.6 units/s (260 ms window, 450 ms cooldown) |
+| `swipe {direction, speed}` | raw palm travels >0.13 units at >0.9 units/s (320 ms window, 450 ms cooldown); a brisk *upward* motion that exits the camera frame also counts (relaxed exit thresholds, 'up' only) |
 | `hold {pose, durationMs}` | same pose steady for 800 ms (fires once) |
 | `wave` | ≥3 horizontal direction reversals in 1.2 s with open palm |
 | `hands-found` / `hands-lost` | tracking status edges |

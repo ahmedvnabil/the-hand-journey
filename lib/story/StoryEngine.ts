@@ -58,9 +58,11 @@ export class StoryEngine extends Emitter<StoryEvents> {
     try {
       const raw = localStorage.getItem(STORAGE_KEY)
       if (!raw) return
-      const saved = JSON.parse(raw) as { stats?: Partial<JourneyStats>; completed?: string[] }
+      const saved = JSON.parse(raw) as { stats?: Partial<JourneyStats>; completed?: string[]; chapter?: string }
       this.stats = { ...EMPTY_STATS, ...saved.stats }
       this.completed = new Set(saved.completed ?? [])
+      const savedIndex = this.chapters.findIndex((c) => c.id === saved.chapter)
+      if (savedIndex > 0) this.index = savedIndex
     } catch {
       /* corrupted save — start fresh */
     }
@@ -68,7 +70,10 @@ export class StoryEngine extends Emitter<StoryEvents> {
 
   private persist(): void {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ stats: this.stats, completed: [...this.completed] }))
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ stats: this.stats, completed: [...this.completed], chapter: this.current.id }),
+      )
     } catch {
       /* storage unavailable (private mode) — journey still works */
     }
@@ -96,12 +101,14 @@ export class StoryEngine extends Emitter<StoryEvents> {
   next(): void {
     if (this.index >= this.chapters.length - 1) return
     this.index++
+    this.persist()
     this.emit('chapter-change', { chapter: this.current, direction: 1 })
   }
 
   previous(): void {
     if (this.index <= 0) return
     this.index--
+    this.persist()
     this.emit('chapter-change', { chapter: this.current, direction: -1 })
   }
 
@@ -110,6 +117,7 @@ export class StoryEngine extends Emitter<StoryEvents> {
     if (target === -1 || target === this.index) return
     const direction = target > this.index ? 1 : -1
     this.index = target
+    this.persist()
     this.emit('chapter-change', { chapter: this.current, direction })
   }
 

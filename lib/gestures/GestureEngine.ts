@@ -17,6 +17,8 @@ interface PerHand {
   holdFired: boolean
   openPalmAt: number
   lastSeen: number
+  lastState: HandState | null
+  exitChecked: boolean
 }
 
 /**
@@ -70,8 +72,12 @@ export class GestureEngine extends Emitter<GestureEngineEvents> {
         seen.add(key)
         const state = this.getOrCreate(key, timestampMs)
         const smoothed = state.smoother.update(hand.landmarks, timestampMs)
-        hands.push(this.buildHandState(key, state, smoothed, timestampMs))
+        // Motion detection reads the RAW centroid — smoothing flattens the
+        // velocity peaks real swipes are made of.
+        const rawPalm = palmCentroid(hand.landmarks)
+        hands.push(this.buildHandState(key, state, smoothed, timestampMs, false, rawPalm))
         state.lastSeen = timestampMs
+        state.exitChecked = false
       }
     }
 
@@ -81,8 +87,17 @@ export class GestureEngine extends Emitter<GestureEngineEvents> {
       const predicted = state.smoother.predict(timestampMs)
       if (predicted) {
         hands.push(this.buildHandState(key, state, predicted, timestampMs, true))
-      } else if (timestampMs - state.lastSeen > 500) {
-        this.perHand.delete(key)
+      } else {
+        // Hand fully gone. A brisk upward exit is the most natural swipe-up
+        // there is — people fling their hand out of the frame.
+        if (!state.exitChecked && state.lastState) {
+          state.exitChecked = true
+          const exit = state.motion.exitSwipe(timestampMs)
+          if (exit) {
+            this.emit('gesture', { type: 'swipe', hand: state.lastState, direction: exit.direction, speed: exit.speed })
+          }
+        }
+        if (timestampMs - state.lastSeen > 500) this.perHand.delete(key)
       }
     }
 
@@ -118,6 +133,8 @@ export class GestureEngine extends Emitter<GestureEngineEvents> {
         holdFired: false,
         openPalmAt: -Infinity,
         lastSeen: t,
+        lastState: null,
+        exitChecked: false,
       }
       this.perHand.set(key, state)
     }
@@ -130,10 +147,11 @@ export class GestureEngine extends Emitter<GestureEngineEvents> {
     landmarks: HandState['landmarks'],
     t: number,
     predicted = false,
+    motionPalm?: HandState['palm'],
   ): HandState {
     const reading = classifyPose(landmarks)
     const palm = palmCentroid(landmarks)
-    const { swipe, speed, wave, velocity } = state.motion.update(palm, t)
+    const { swipe, speed, wave, velocity } = state.motion.update(motionPalm ?? palm, t)
 
     const hand: HandState = {
       handedness: key as HandState['handedness'],
@@ -148,6 +166,7 @@ export class GestureEngine extends Emitter<GestureEngineEvents> {
     }
 
     if (predicted) return hand // don't fire discrete gestures off extrapolated data
+    state.lastState = hand
 
     // Pose transitions → discrete events.
     if (reading.pose !== state.pose) {
